@@ -1,0 +1,128 @@
+name: APIM CI/CD Pipeline
+
+on:
+  push:
+    branches: [import]
+  pull_request:
+    branches: [import]
+  workflow_dispatch:
+    inputs:
+      run_extractor:
+        description: 'Run APIOps extractor'
+        required: false
+        default: false
+        type: boolean
+
+env:
+  AZURE_CLIENT_ID: ${{ vars.AZURE_CLIENT_ID }}
+  AZURE_TENANT_ID: ${{ vars.AZURE_TENANT_ID }}
+  AZURE_SUBSCRIPTION_ID: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+
+permissions:
+  id-token: write
+  contents: read
+  pull-requests: write
+
+jobs:
+  # Extract APIM configuration when manually triggered
+  extract:
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.run_extractor == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Azure Login with OIDC
+        uses: azure/login@v2
+        with:
+          client-id: ${{ env.AZURE_CLIENT_ID }}
+          tenant-id: ${{ env.AZURE_TENANT_ID }}
+          subscription-id: ${{ env.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Load sandbox parameters
+        id: params
+        run: |
+          echo "apim_name=$(jq -r '.parameters.workloadName.value + "-" + .parameters.environment.value + "-" + .parameters.identifier.value' infra/params/sandbox.json)" >> $GITHUB_OUTPUT
+          echo "resource_group=rg-apim-$(jq -r '.parameters.workloadName.value + "-" + .parameters.environment.value + "-eastus2-" + .parameters.identifier.value' infra/params/sandbox.json)" >> $GITHUB_OUTPUT
+
+      - name: Download APIOps extractor
+        run: |
+          wget -O extractor.zip https://github.com/Azure/apiops/releases/latest/download/extractor-linux-x64.zip
+          unzip extractor.zip
+          chmod +x extractor
+
+      - name: Run APIOps extractor
+        env:
+          AZURE_RESOURCE_GROUP_NAME: ${{ steps.params.outputs.resource_group }}
+          API_MANAGEMENT_SERVICE_NAME: ${{ steps.params.outputs.apim_name }}
+          API_MANAGEMENT_SERVICE_OUTPUT_FOLDER_PATH: ./artifacts
+          API_SPECIFICATION_FORMAT: OpenAPIV3Yaml
+          CONFIGURATION_YAML_PATH: legacy/configuration.extractor.yaml
+        run: ./extractor
+
+      - name: Upload extracted artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: apim-artifacts
+          path: artifacts/
+
+  # Lint API specifications on pull requests
+  lint:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Spectral
+        run: npm install -g @stoplight/spectral-cli
+
+      - name: Run Spectral linting
+        run: |
+          if [ -d "artifacts/apis" ]; then
+            spectral lint --format stylish artifacts/apis/**/*.json -r https://raw.githubusercontent.com/connectedcircuits/devops-api-linter/main/rules.yaml
+          else
+            echo "No API artifacts found to lint"
+          fi
+
+  # Deploy APIM configuration when merging to import
+  deploy:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/import'
+    runs-on: ubuntu-latest
+    environment: sbx
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Azure Login with OIDC
+        uses: azure/login@v2
+        with:
+          client-id: ${{ env.AZURE_CLIENT_ID }}
+          tenant-id: ${{ env.AZURE_TENANT_ID }}
+          subscription-id: ${{ env.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Load sandbox parameters
+        id: params
+        run: |
+          echo "apim_name=$(jq -r '.parameters.workloadName.value + "-" + .parameters.environment.value + "-" + .parameters.identifier.value' infra/params/sandbox.json)" >> $GITHUB_OUTPUT
+          echo "resource_group=rg-apim-$(jq -r '.parameters.workloadName.value + "-" + .parameters.environment.value + "-eastus2-" + .parameters.identifier.value' infra/params/sandbox.json)" >> $GITHUB_OUTPUT
+
+      - name: Download APIOps publisher
+        run: |
+          wget -O publisher.zip https://github.com/Azure/apiops/releases/latest/download/publisher-linux-x64.zip
+          unzip publisher.zip
+          chmod +x publisher
+
+      - name: Remove subscriptions folder (safety)
+        run: rm -rf artifacts/subscriptions
+
+      - name: Run APIOps publisher
+        env:
+          AZURE_RESOURCE_GROUP_NAME: ${{ steps.params.outputs.resource_group }}
+          API_MANAGEMENT_SERVICE_NAME: ${{ steps.params.outputs.apim_name }}
+          API_MANAGEMENT_SERVICE_OUTPUT_FOLDER_PATH: ./artifacts
+          CONFIGURATION_YAML_PATH: legacy/configuration.prod.yaml
+          COMMIT_ID: ${{ github.sha }}
+        run: ./publisher
