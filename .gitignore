@@ -344,3 +344,19 @@ scenarios/apim-baseline/bicep/parameters.json
 *.http
 
 *-backend.hcl
+
+# APIOps - Exclude sensitive artifacts
+artifacts/named\ values/
+artifacts/loggers/
+artifacts/**/*credential*
+artifacts/**/*secret*
+artifacts/**/*key*
+
+# APIOps - Temporary extraction files
+extractor.exe
+extractor.pdb
+extractor.zip
+publisher.exe
+publisher.pdb
+publisher.zip
+federated-credential.json
