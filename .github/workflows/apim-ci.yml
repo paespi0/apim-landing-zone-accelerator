@@ -41,7 +41,7 @@ jobs:
       - name: Load sandbox parameters
         id: params
         run: |
-          echo "apim_name=$(jq -r '.parameters.workloadName.value + "-" + .parameters.environment.value + "-" + .parameters.identifier.value' infra/params/sandbox.json)" >> $GITHUB_OUTPUT
+          echo "apim_name=apim-$(jq -r '.parameters.workloadName.value + "-" + .parameters.environment.value + "-eastus2-" + .parameters.identifier.value' infra/params/sandbox.json)" >> $GITHUB_OUTPUT
           echo "resource_group=rg-apim-$(jq -r '.parameters.workloadName.value + "-" + .parameters.environment.value + "-eastus2-" + .parameters.identifier.value' infra/params/sandbox.json)" >> $GITHUB_OUTPUT
 
       - name: Download APIOps extractor
@@ -106,7 +106,7 @@ jobs:
       - name: Load sandbox parameters
         id: params
         run: |
-          echo "apim_name=$(jq -r '.parameters.workloadName.value + "-" + .parameters.environment.value + "-" + .parameters.identifier.value' infra/params/sandbox.json)" >> $GITHUB_OUTPUT
+          echo "apim_name=apim-$(jq -r '.parameters.workloadName.value + "-" + .parameters.environment.value + "-eastus2-" + .parameters.identifier.value' infra/params/sandbox.json)" >> $GITHUB_OUTPUT
           echo "resource_group=rg-apim-$(jq -r '.parameters.workloadName.value + "-" + .parameters.environment.value + "-eastus2-" + .parameters.identifier.value' infra/params/sandbox.json)" >> $GITHUB_OUTPUT
 
       - name: Download APIOps publisher
