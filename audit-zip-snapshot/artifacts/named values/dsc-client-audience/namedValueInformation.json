@@ -1,0 +1,7 @@
+{
+  "properties": {
+    "displayName": "dsc-client-audience",
+    "secret": false,
+    "value": "https://dvn.onmicrosoft.com/5dc67823-ec22-4425-90e2-468323fd324f"
+  }
+}

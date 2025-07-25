@@ -1,0 +1,9 @@
+{
+  "properties": {
+    "displayName": "app-insights-key",
+    "keyVault": {
+      "secretIdentifier": "https://apim-dvn-pre-kv.vault.azure.net/secrets/appInsightsInstrumentationKey"
+    },
+    "secret": true
+  }
+}

@@ -1,0 +1,21 @@
+<policies>
+	<inbound>
+		<base />
+		<set-backend-service base-url="{{dsc-client-url}}" />
+		<validate-jwt header-name="Authorization" failed-validation-httpcode="401" failed-validation-error-message="Unauthorized. Access token is missing or invalid.">
+			<openid-config url="{{openid-url}}" />
+			<audiences>
+				<audience>{{dsc-client-audience}}</audience>
+			</audiences>
+		</validate-jwt>
+	</inbound>
+	<backend>
+		<base />
+	</backend>
+	<outbound>
+		<base />
+	</outbound>
+	<on-error>
+		<base />
+	</on-error>
+</policies>

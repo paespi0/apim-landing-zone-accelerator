@@ -1,0 +1,19 @@
+{
+  "properties": {
+    "path": "bp",
+    "apiRevision": "1",
+    "authenticationSettings": {},
+    "description": "",
+    "isCurrent": true,
+    "displayName": "bp",
+    "protocols": [
+      "https"
+    ],
+    "serviceUrl": "https://odata-request-builder.kube.dvn.com/api/odata/schema/data_services/planning_budget",
+    "subscriptionKeyParameterNames": {
+      "header": "Ocp-Apim-Subscription-Key",
+      "query": "subscription-key"
+    },
+    "subscriptionRequired": false
+  }
+}

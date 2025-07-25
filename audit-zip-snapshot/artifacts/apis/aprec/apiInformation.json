@@ -1,0 +1,19 @@
+{
+  "properties": {
+    "path": "aprec",
+    "apiRevision": "1",
+    "authenticationSettings": {},
+    "description": "",
+    "isCurrent": true,
+    "displayName": "aprec",
+    "protocols": [
+      "https"
+    ],
+    "serviceUrl": "https://odata-request-builder.kube.dvn.com/api/odata/schema/data_services/finance_and_accounting",
+    "subscriptionKeyParameterNames": {
+      "header": "Ocp-Apim-Subscription-Key",
+      "query": "subscription-key"
+    },
+    "subscriptionRequired": false
+  }
+}

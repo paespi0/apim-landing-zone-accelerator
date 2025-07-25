@@ -1,0 +1,31 @@
+openapi: 3.0.1
+info:
+  title: SsFmeTools
+  description: ''
+  version: '1.0'
+servers:
+  - url: https://apim.pre.dvn.com/ss-fme-tools
+  - url: https://api.pre.dvn.com/ss-fme-tools
+  - url: https://ext.api.pre.dvn.com/ss-fme-tools
+paths:
+  /WELL/WELL_DIR_SRVY_Find_Convergence_Angle_Batch.fmw:
+    post:
+      summary: Calculate Convergence Angle
+      description: 'Calculate a convergence angle from either map x/y or lat/long (nad27, nad83, or wgs84) and the epsg code projection to calculate the convergence angle for.'
+      operationId: calculate-convergence-angle
+      responses:
+        '200':
+          description: 'null'
+components:
+  securitySchemes:
+    apiKeyHeader:
+      type: apiKey
+      name: Ocp-Apim-Subscription-Key
+      in: header
+    apiKeyQuery:
+      type: apiKey
+      name: subscription-key
+      in: query
+security:
+  - apiKeyHeader: [ ]
+  - apiKeyQuery: [ ]

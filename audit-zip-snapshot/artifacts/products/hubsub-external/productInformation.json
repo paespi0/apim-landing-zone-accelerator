@@ -1,0 +1,9 @@
+{
+  "properties": {
+    "displayName": "HubSub External",
+    "description": "HubSub External API references",
+    "approvalRequired": false,
+    "state": "published",
+    "subscriptionRequired": true
+  }
+}

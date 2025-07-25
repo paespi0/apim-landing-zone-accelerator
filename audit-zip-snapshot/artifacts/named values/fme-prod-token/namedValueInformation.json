@@ -1,0 +1,9 @@
+{
+  "properties": {
+    "displayName": "fme-prod-token",
+    "keyVault": {
+      "secretIdentifier": "https://apim-dvn-pre-kv.vault.azure.net/secrets/fmeToken"
+    },
+    "secret": true
+  }
+}

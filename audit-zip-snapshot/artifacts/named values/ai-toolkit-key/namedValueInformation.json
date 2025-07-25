@@ -1,0 +1,9 @@
+{
+  "properties": {
+    "displayName": "ai-toolkit-key",
+    "keyVault": {
+      "secretIdentifier": "https://apim-dvn-pre-kv.vault.azure.net/secrets/aiToolkitKey"
+    },
+    "secret": true
+  }
+}

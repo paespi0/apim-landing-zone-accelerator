@@ -1,0 +1,18 @@
+<policies>
+	<inbound>
+		<set-query-parameter name="token" exists-action="override">
+			<value>{{fme-token}}</value>
+		</set-query-parameter>
+		<set-backend-service base-url="{{fme-url}}" />
+		<base />
+	</inbound>
+	<backend>
+		<base />
+	</backend>
+	<outbound>
+		<base />
+	</outbound>
+	<on-error>
+		<base />
+	</on-error>
+</policies>

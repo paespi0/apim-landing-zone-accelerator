@@ -1,0 +1,18 @@
+{
+  "properties": {
+    "path": "dsurv",
+    "apiRevision": "1",
+    "authenticationSettings": {},
+    "isCurrent": true,
+    "displayName": "DSURV",
+    "protocols": [
+      "https"
+    ],
+    "serviceUrl": "https://apim.pre.dvn.com/dsurv",
+    "subscriptionKeyParameterNames": {
+      "header": "Ocp-Apim-Subscription-Key",
+      "query": "subscription-key"
+    },
+    "subscriptionRequired": false
+  }
+}

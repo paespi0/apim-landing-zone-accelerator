@@ -1,0 +1,19 @@
+{
+  "properties": {
+    "path": "maphub",
+    "apiRevision": "1",
+    "authenticationSettings": {},
+    "description": "",
+    "isCurrent": true,
+    "displayName": "MapHub",
+    "protocols": [
+      "https"
+    ],
+    "serviceUrl": "https://maphubfed.dvn.com/arcgis/rest",
+    "subscriptionKeyParameterNames": {
+      "header": "Ocp-Apim-Subscription-Key",
+      "query": "subscription-key"
+    },
+    "subscriptionRequired": true
+  }
+}

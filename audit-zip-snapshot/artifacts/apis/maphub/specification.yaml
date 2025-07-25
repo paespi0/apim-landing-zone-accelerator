@@ -1,0 +1,39 @@
+openapi: 3.0.1
+info:
+  title: MapHub
+  description: ''
+  version: '1.0'
+servers:
+  - url: https://apim.pre.dvn.com/maphub
+  - url: https://api.pre.dvn.com/maphub
+  - url: https://ext.api.pre.dvn.com/maphub
+paths:
+  /token:
+    post:
+      summary: AccessToken_Post
+      description: AccessToken_Post
+      operationId: accesstoken-post
+      responses:
+        '200':
+          description: 'null'
+  /services/*:
+    get:
+      summary: Services_Get
+      description: Services_Get
+      operationId: services-get
+      responses:
+        '200':
+          description: 'null'
+components:
+  securitySchemes:
+    apiKeyHeader:
+      type: apiKey
+      name: Ocp-Apim-Subscription-Key
+      in: header
+    apiKeyQuery:
+      type: apiKey
+      name: subscription-key
+      in: query
+security:
+  - apiKeyHeader: [ ]
+  - apiKeyQuery: [ ]

@@ -1,0 +1,19 @@
+{
+  "properties": {
+    "path": "ens",
+    "apiRevision": "1",
+    "authenticationSettings": {},
+    "description": "API for sending email and sms messages.",
+    "isCurrent": true,
+    "displayName": "Enterprise Notification Services",
+    "protocols": [
+      "https"
+    ],
+    "serviceUrl": "https://dvn-ens-dev-fn.azurewebsites.net/api",
+    "subscriptionKeyParameterNames": {
+      "header": "Ocp-Apim-Subscription-Key",
+      "query": "subscription-key"
+    },
+    "subscriptionRequired": true
+  }
+}

@@ -1,0 +1,25 @@
+openapi: 3.0.1
+info:
+  title: dq
+  description: ''
+  version: '1.0'
+servers:
+  - url: https://apim.pre.dvn.com/dq
+  - url: https://api.pre.dvn.com/dq
+  - url: https://ext.api.pre.dvn.com/dq
+paths:
+  '/{action}':
+    get:
+      summary: 'dq_trending,fact_drilldown_geo,fact_result and fact_drilldown'
+      description: 'dq_trending,fact_drilldown_geo,fact_result and fact_drilldown'
+      operationId: dq-trending
+      parameters:
+        - name: action
+          in: path
+          required: true
+          schema:
+            type: ''
+      responses:
+        '200':
+          description: 'null'
+components: { }

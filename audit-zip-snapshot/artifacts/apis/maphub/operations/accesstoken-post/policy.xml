@@ -1,0 +1,15 @@
+<policies>
+	<inbound>
+		<base />
+		<set-backend-service base-url="https://maphub.dvn.com/arcgis/sharing/rest/oauth2" />
+	</inbound>
+	<backend>
+		<base />
+	</backend>
+	<outbound>
+		<base />
+	</outbound>
+	<on-error>
+		<base />
+	</on-error>
+</policies>

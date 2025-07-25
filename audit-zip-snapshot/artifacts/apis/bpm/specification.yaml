@@ -1,0 +1,81 @@
+openapi: 3.0.1
+info:
+  title: bpm
+  description: ''
+  version: '1.0'
+servers:
+  - url: https://apim.pre.dvn.com/bpm
+  - url: https://api.pre.dvn.com/bpm
+  - url: https://ext.api.pre.dvn.com/bpm
+paths:
+  '/{action}':
+    get:
+      summary: wbs
+      description: wbs
+      operationId: wbs-received-tasks
+      parameters:
+        - name: action
+          in: path
+          required: true
+          schema:
+            type: ''
+      responses:
+        '200':
+          description: 'null'
+  /facility:
+    get:
+      summary: facility
+      description: facility
+      operationId: facility
+      responses:
+        '200':
+          description: 'null'
+  /operational_hierarchy_active_assignments:
+    get:
+      summary: operational_hierarchy
+      description: operational_hierarchy
+      operationId: operational-hierarchy
+      responses:
+        '200':
+          description: 'null'
+  /wellbore_completion:
+    get:
+      summary: wellbore_completion
+      description: wellbore_completion
+      operationId: wellbore-completion
+      responses:
+        '200':
+          description: 'null'
+  /wellbore_completion_summary:
+    get:
+      summary: wellbore_completion_summary
+      description: wellbore_completion_summary
+      operationId: wellbore-completion-summary
+      responses:
+        '200':
+          description: 'null'
+  /ar_summary:
+    get:
+      summary: ar_summary
+      description: ar_summary
+      operationId: ar-summary
+      responses:
+        '200':
+          description: 'null'
+  /ar_wbs_xref:
+    get:
+      summary: ar_wbs_xref
+      description: ar_wbs_xref
+      operationId: 63ee76215ac28044558c8cd5
+      responses:
+        '200':
+          description: 'null'
+  /received_tasks:
+    get:
+      summary: received_tasks
+      description: received_tasks
+      operationId: 63ee7b2be33933572d754183
+      responses:
+        '200':
+          description: 'null'
+components: { }

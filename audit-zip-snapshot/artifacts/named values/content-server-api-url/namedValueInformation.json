@@ -1,0 +1,7 @@
+{
+  "properties": {
+    "displayName": "content-server-api-url",
+    "secret": false,
+    "value": "https://qopentextapi.pre.dvn.com/otcs/llisapi.dll/api"
+  }
+}

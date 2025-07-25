@@ -1,0 +1,255 @@
+openapi: 3.0.1
+info:
+  title: Pi2Azure
+  description: ''
+  version: '1.0'
+servers:
+  - url: https://apim.pre.dvn.com/PiQuery
+  - url: https://api.pre.dvn.com/PiQuery
+  - url: https://ext.api.pre.dvn.com/PiQuery
+paths:
+  /GetMonitorWellData:
+    get:
+      summary: GetMonitorWellData
+      description: GetMonitorWellData
+      operationId: getmonitorwelldata
+      parameters:
+        - name: wellName
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: startDate
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: endDate
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: interpSpan
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+  /GetTreatmentWellData:
+    get:
+      summary: GetTreatmentWellData
+      description: GetTreatmentWellData
+      operationId: gettreatmentwelldata
+      parameters:
+        - name: wellName
+          in: query
+          schema:
+            type: string
+        - name: startDate
+          in: query
+          schema:
+            type: string
+        - name: endDate
+          in: query
+          schema:
+            type: string
+        - name: interpSpan
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+  /GetWellPressureData:
+    get:
+      summary: GetWellPressureData
+      description: GetWellPressureData
+      operationId: getwellpressuredata
+      parameters:
+        - name: wellName
+          in: query
+          schema:
+            type: string
+        - name: startDate
+          in: query
+          schema:
+            type: string
+        - name: endDate
+          in: query
+          schema:
+            type: string
+        - name: interpSpan
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+  /GetDownHolePressureData:
+    get:
+      summary: GetDownHolePressureData
+      description: GetDownHolePressureData
+      operationId: getdownholepressuredata
+      parameters:
+        - name: wellName
+          in: query
+          schema:
+            type: string
+        - name: startDate
+          in: query
+          schema:
+            type: string
+        - name: endDate
+          in: query
+          schema:
+            type: string
+        - name: interpSpan
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+  /GetBottomPressureData:
+    get:
+      summary: GetBottomPressureData
+      description: GetBottomPressureData
+      operationId: getbottompressuredata
+      parameters:
+        - name: wellName
+          in: query
+          schema:
+            type: string
+        - name: startDate
+          in: query
+          schema:
+            type: string
+        - name: endDate
+          in: query
+          schema:
+            type: string
+        - name: interpSpan
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+  /GetPermianWellPressureData:
+    get:
+      summary: GetPermianWellPressureData
+      description: GetPermianWellPressureData
+      operationId: getpermianwellpressureData
+      parameters:
+        - name: wellName
+          in: query
+          schema:
+            type: string
+        - name: startDate
+          in: query
+          schema:
+            type: string
+        - name: endDate
+          in: query
+          schema:
+            type: string
+        - name: interpSpan
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+  /GetPressureInterferenceData:
+    get:
+      summary: GetPressureInterferenceData
+      description: GetPressureInterferenceData
+      operationId: getpressureinterferencedata
+      parameters:
+        - name: wellName
+          in: query
+          schema:
+            type: string
+        - name: startDate
+          in: query
+          schema:
+            type: string
+        - name: endDate
+          in: query
+          schema:
+            type: string
+        - name: interpSpan
+          in: query
+          schema:
+            type: string
+        - name: attribute
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+  /GetMonitorWellDataDynamic:
+    get:
+      summary: GetMonitorWellDataDynamic
+      description: GetMonitorWellDataDynamic
+      operationId: getmonitorwelldatadynamic
+      parameters:
+        - name: wellName
+          in: query
+          schema:
+            type: string
+        - name: startDate
+          in: query
+          schema:
+            type: string
+        - name: endDate
+          in: query
+          schema:
+            type: string
+        - name: interpSpan
+          in: query
+          schema:
+            type: string
+        - name: attribute
+          in: query
+          schema:
+            type: string
+        - name: afServer
+          in: query
+          schema:
+            type: string
+        - name: afDatabase
+          in: query
+          schema:
+            type: string
+        - name: piElement
+          in: query
+          schema:
+            type: string
+        - name: pressAttribute
+          in: query
+          schema:
+            type: string
+        - name: tempAttribute
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+components:
+  securitySchemes:
+    apiKeyHeader:
+      type: apiKey
+      name: Ocp-Apim-Subscription-Key
+      in: header
+    apiKeyQuery:
+      type: apiKey
+      name: subscription-key
+      in: query
+security:
+  - apiKeyHeader: [ ]
+  - apiKeyQuery: [ ]

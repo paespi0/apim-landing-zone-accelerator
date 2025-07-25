@@ -1,0 +1,19 @@
+{
+  "properties": {
+    "path": "ss-fme-tools",
+    "apiRevision": "1",
+    "authenticationSettings": {},
+    "description": "",
+    "isCurrent": true,
+    "displayName": "SsFmeTools",
+    "protocols": [
+      "https"
+    ],
+    "serviceUrl": "http://fme.dev.dvn.com/fmedatastreaming",
+    "subscriptionKeyParameterNames": {
+      "header": "Ocp-Apim-Subscription-Key",
+      "query": "subscription-key"
+    },
+    "subscriptionRequired": true
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "properties": {
+    "displayName": "dsurv-url",
+    "secret": false,
+    "value": "https://dsurv.pre.dvn.com"
+  }
+}

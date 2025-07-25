@@ -1,0 +1,9 @@
+{
+  "properties": {
+    "displayName": "Enterprise Notification Services",
+    "description": "API for sending email and sms messages.",
+    "approvalRequired": false,
+    "state": "published",
+    "subscriptionRequired": true
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "properties": {
+    "path": "dq",
+    "apiRevision": "1",
+    "authenticationSettings": {},
+    "description": "",
+    "isCurrent": true,
+    "displayName": "dq",
+    "protocols": [
+      "https"
+    ],
+    "serviceUrl": "https://odata-request-builder.kube.dvn.com/api/odata/schema/data_services/enterprise",
+    "subscriptionKeyParameterNames": {
+      "header": "Ocp-Apim-Subscription-Key",
+      "query": "subscription-key"
+    },
+    "subscriptionRequired": false
+  }
+}

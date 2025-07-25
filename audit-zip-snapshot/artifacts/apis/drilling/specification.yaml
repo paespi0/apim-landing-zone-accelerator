@@ -1,0 +1,169 @@
+openapi: 3.0.1
+info:
+  title: drilling
+  description: ''
+  version: '1.0'
+servers:
+  - url: https://apim.pre.dvn.com/drilling
+  - url: https://api.pre.dvn.com/drilling
+  - url: https://ext.api.pre.dvn.com/drilling
+paths:
+  /wv_tub_comp_mandrel_insert:
+    get:
+      summary: wv_tub_comp_mandrel_insert
+      description: wv_tub_comp_mandrel_insert
+      operationId: wv-tub-comp-mandrel-insert
+      responses:
+        '200':
+          description: 'null'
+  /rod:
+    get:
+      summary: rod
+      description: rod
+      operationId: rod
+      responses:
+        '200':
+          description: 'null'
+  /tubing:
+    get:
+      summary: tubing
+      description: tubing
+      operationId: tubing
+      responses:
+        '200':
+          description: 'null'
+  /well_interventions:
+    get:
+      summary: well_interventions
+      description: well_interventions
+      operationId: well-interventions
+      responses:
+        '200':
+          description: 'null'
+  /wv_other_in_hole:
+    get:
+      summary: wv_other_in_hole
+      description: wv_other_in_hole
+      operationId: wv-other-in-hole
+      responses:
+        '200':
+          description: 'null'
+  /wv_perforation:
+    get:
+      summary: wv_perforation
+      description: wv_perforation
+      operationId: wv-perforation
+      responses:
+        '200':
+          description: 'null'
+  /wv_perforation_status:
+    get:
+      summary: wv_perforation_status
+      description: wv_perforation_status
+      operationId: wv-perforation-status
+      responses:
+        '200':
+          description: 'null'
+  /wv_rod_comp:
+    get:
+      summary: wv_rod_comp
+      description: wv_rod_comp
+      operationId: wv-rod-comp
+      responses:
+        '200':
+          description: 'null'
+  /wv_rod_comp_pump:
+    get:
+      summary: wv_rod_comp_pump
+      description: wv_rod_comp_pump
+      operationId: wv-rod-comp-pump
+      responses:
+        '200':
+          description: 'null'
+  /wv_stim:
+    get:
+      summary: wv_stim
+      description: wv_stim
+      operationId: wv-stim
+      responses:
+        '200':
+          description: 'null'
+  /wv_stim_int:
+    get:
+      summary: wv_stim_int
+      description: wv_stim_int
+      operationId: wv-stim-int
+      responses:
+        '200':
+          description: 'null'
+  /wv_stim_int_fluid:
+    get:
+      summary: wv_stim_int_fluid
+      description: wv_stim_int_fluid
+      operationId: wv-stim-int-fluid
+      responses:
+        '200':
+          description: 'null'
+  /wv_stim_int_fluid_add:
+    get:
+      summary: wv_stim_int_fluid_add
+      description: wv_stim_int_fluid_add
+      operationId: wv-stim-int-fluid-add
+      responses:
+        '200':
+          description: 'null'
+  /wv_stim_int_perf_calc:
+    get:
+      summary: wv_stim_int_perf_calc
+      description: wv_stim_int_perf_calc
+      operationId: wv-stim-int-perf-calc
+      responses:
+        '200':
+          description: 'null'
+  /wv_stim_int_prop:
+    get:
+      summary: wv_stim_int_prop
+      description: wv_stim_int_prop
+      operationId: wv-stim-int-prop
+      responses:
+        '200':
+          description: 'null'
+  /wv_tub:
+    get:
+      summary: wv_tub
+      description: wv_tub
+      operationId: wv-tub
+      responses:
+        '200':
+          description: 'null'
+  /wv_tub_comp:
+    get:
+      summary: wv_tub_comp
+      description: wv_tub_comp
+      operationId: wv-tub-comp
+      responses:
+        '200':
+          description: 'null'
+  /wv_tub_comp_mandrel:
+    get:
+      summary: wv_tub_comp_mandrel
+      description: wv_tub_comp_mandrel
+      operationId: wv-tub-comp-mandrel
+      responses:
+        '200':
+          description: 'null'
+  '/{action}':
+    get:
+      summary: wv_wellbore_size
+      description: wv_wellbore_size
+      operationId: wv-wellbore-size
+      parameters:
+        - name: action
+          in: path
+          required: true
+          schema:
+            type: ''
+      responses:
+        '200':
+          description: 'null'
+components: { }

@@ -1,0 +1,19 @@
+{
+  "properties": {
+    "path": "dsc/pm/maintenance_notification",
+    "apiRevision": "1",
+    "authenticationSettings": {},
+    "description": "SAP API for MA Notifications",
+    "isCurrent": true,
+    "displayName": "SAP MA Notification",
+    "protocols": [
+      "https"
+    ],
+    "serviceUrl": "http://sapqm0ci.corp.dvn.com:8000/sap/opu/odata/sap/ZAM_DSC_MAINT_NOTIF_SRV/",
+    "subscriptionKeyParameterNames": {
+      "header": "Ocp-Apim-Subscription-Key",
+      "query": "subscription-key"
+    },
+    "subscriptionRequired": true
+  }
+}

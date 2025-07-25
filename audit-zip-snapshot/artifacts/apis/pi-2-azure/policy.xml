@@ -1,0 +1,61 @@
+<!--
+    IMPORTANT:
+    - Policy elements can appear only within the <inbound>, <outbound>, <backend> section elements.
+    - To apply a policy to the incoming request (before it is forwarded to the backend service), place a corresponding policy element within the <inbound> section element.
+    - To apply a policy to the outgoing response (before it is sent back to the caller), place a corresponding policy element within the <outbound> section element.
+    - To add a policy, place the cursor at the desired insertion point and select a policy from the sidebar.
+    - To remove a policy, delete the corresponding policy statement from the policy document.
+    - Position the <base> element within a section element to inherit all policies from the corresponding section element in the enclosing scope.
+    - Remove the <base> element to prevent inheriting policies from the corresponding section element in the enclosing scope.
+    - Policies are applied in the order of their appearance, from the top down.
+    - Comments within policy elements are not supported and may disappear. Place your comments between policy elements or at a higher level scope.
+-->
+<policies>
+	<inbound>
+		<cors allow-credentials="true">
+			<allowed-origins>
+				<origin>http://localhost:4200/</origin>
+				<origin>https://dvn-subsurfaceanalytics-dev.azurewebsites.net/</origin>
+				<origin>https://dvn-subsurfaceanalytics-qa.azurewebsites.net</origin>
+				<origin>https://subsurfaceanalytics.dvn.com/</origin>
+			</allowed-origins>
+			<allowed-methods preflight-result-max-age="300">
+				<method>GET</method>
+				<method>POST</method>
+				<method>OPTIONS</method>
+				<method>HEAD</method>
+				<method>TRACE</method>
+			</allowed-methods>
+			<allowed-headers>
+				<header>*</header>
+			</allowed-headers>
+			<expose-headers>
+				<header>*</header>
+			</expose-headers>
+		</cors>
+		<validate-jwt header-name="Authorization" failed-validation-httpcode="401" failed-validation-error-message="You are unauthorized for this resource." require-expiration-time="false" require-scheme="Bearer" require-signed-tokens="false">
+			<openid-config url="https://login.microsoftonline.com/489f0f3b-e6ac-4928-b4f6-cfc55482e14e/v2.0/.well-known/openid-configuration" />
+			<audiences>
+				<audience>df5dd4f2-c632-4a0a-9123-fcdf40d9fb3f</audience>
+				<audience>decc613c-a74c-46b5-afd1-f80ef4ca44c9</audience>
+				<audience>c0757f84-ab43-4d70-bc88-f5c129d0e95d</audience>
+			</audiences>
+			<issuers>
+				<issuer>https://login.microsoftonline.com/489f0f3b-e6ac-4928-b4f6-cfc55482e14e/oauth2/v2.0</issuer>
+				<issuer>https://sts.windows.net/489f0f3b-e6ac-4928-b4f6-cfc55482e14e/</issuer>
+				<issuer>https://login.microsoftonline.com/489f0f3b-e6ac-4928-b4f6-cfc55482e14e/v2.0/</issuer>
+			</issuers>
+		</validate-jwt>
+		<set-backend-service base-url="{{pi2azure-url}}" />
+		<base />
+	</inbound>
+	<backend>
+		<base />
+	</backend>
+	<outbound>
+		<base />
+	</outbound>
+	<on-error>
+		<base />
+	</on-error>
+</policies>

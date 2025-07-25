@@ -1,0 +1,25 @@
+openapi: 3.0.1
+info:
+  title: dart
+  description: ''
+  version: '1.0'
+servers:
+  - url: https://apim.pre.dvn.com/dart
+  - url: https://api.pre.dvn.com/dart
+  - url: https://ext.api.pre.dvn.com/dart
+paths:
+  '/{action}':
+    get:
+      summary: worker
+      description: worker
+      operationId: worker
+      parameters:
+        - name: action
+          in: path
+          required: true
+          schema:
+            type: ''
+      responses:
+        '200':
+          description: 'null'
+components: { }

@@ -1,0 +1,63 @@
+openapi: 3.0.1
+info:
+  title: SAP M1 Notification
+  description: SAP API for M1 Notifications
+  version: '1.0'
+servers:
+  - url: https://apim.pre.dvn.com/dsc/m1/maintenance_notification
+  - url: https://api.pre.dvn.com/dsc/m1/maintenance_notification
+  - url: https://ext.api.pre.dvn.com/dsc/m1/maintenance_notification
+paths:
+  '/{action}':
+    get:
+      summary: GET
+      description: GET
+      operationId: get
+      parameters:
+        - name: action
+          in: path
+          required: true
+          schema:
+            type: ''
+      responses:
+        '200':
+          description: 'null'
+    put:
+      summary: PUT
+      description: PUT
+      operationId: put
+      parameters:
+        - name: action
+          in: path
+          required: true
+          schema:
+            type: ''
+      responses:
+        '200':
+          description: 'null'
+    post:
+      summary: POST
+      description: POST
+      operationId: post
+      parameters:
+        - name: action
+          in: path
+          required: true
+          schema:
+            type: ''
+      responses:
+        '200':
+          description: 'null'
+components:
+  securitySchemes:
+    apiKeyHeader:
+      type: apiKey
+      name: Ocp-Apim-Subscription-Key
+      in: header
+    apiKeyQuery:
+      type: apiKey
+      name: subscription-key
+      in: query
+security:
+  - apiKeyHeader: [ ]
+  - apiKeyQuery: [ ]

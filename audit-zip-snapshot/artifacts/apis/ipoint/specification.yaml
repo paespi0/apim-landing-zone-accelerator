@@ -1,0 +1,37 @@
+openapi: 3.0.1
+info:
+  title: IPOINT
+  description: ''
+  version: '1.0'
+servers:
+  - url: https://apim.pre.dvn.com/ipoint
+  - url: https://api.pre.dvn.com/ipoint
+  - url: https://ext.api.pre.dvn.com/ipoint
+paths:
+  '/dataset/{datasetId}':
+    get:
+      summary: ipoint-passthrough
+      description: This is just a pass through on to the IPOINT rest interface
+      operationId: ipoint-passthrough
+      parameters:
+        - name: datasetId
+          in: path
+          required: true
+          schema:
+            type: ''
+      responses:
+        '200':
+          description: 'null'
+components:
+  securitySchemes:
+    apiKeyHeader:
+      type: apiKey
+      name: Ocp-Apim-Subscription-Key
+      in: header
+    apiKeyQuery:
+      type: apiKey
+      name: subscription-key
+      in: query
+security:
+  - apiKeyHeader: [ ]
+  - apiKeyQuery: [ ]

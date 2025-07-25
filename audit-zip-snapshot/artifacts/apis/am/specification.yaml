@@ -1,0 +1,65 @@
+openapi: 3.0.1
+info:
+  title: am
+  description: ''
+  version: '1.0'
+servers:
+  - url: https://apim.pre.dvn.com/am
+  - url: https://api.pre.dvn.com/am
+  - url: https://ext.api.pre.dvn.com/am
+paths:
+  '/{action}':
+    get:
+      summary: maintenance_plan
+      description: maintenance_plan
+      operationId: maintenance-plan
+      parameters:
+        - name: action
+          in: path
+          required: true
+          schema:
+            type: ''
+      responses:
+        '200':
+          description: 'null'
+  /virtual_group:
+    get:
+      summary: virtual_group
+      description: virtual_group
+      operationId: virtual-group
+      responses:
+        '200':
+          description: 'null'
+  /virtual_group_equipment_cross_reference:
+    get:
+      summary: virtual_group_equipment_cross_reference
+      description: virtual_group_equipment_cross_reference
+      operationId: virtual-group-equipment-cross-reference
+      responses:
+        '200':
+          description: 'null'
+  /facility:
+    get:
+      summary: facility
+      description: facility
+      operationId: facility
+      responses:
+        '200':
+          description: 'null'
+  /facility_field_estimates:
+    get:
+      summary: facility_field_estimates
+      description: facility_field_estimates
+      operationId: facility-field-estimates
+      responses:
+        '200':
+          description: 'null'
+  /facility_job:
+    get:
+      summary: facility_job
+      description: facility_job
+      operationId: facility-job
+      responses:
+        '200':
+          description: 'null'
+components: { }

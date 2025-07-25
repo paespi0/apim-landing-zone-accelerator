@@ -1,0 +1,19 @@
+{
+  "properties": {
+    "path": "am",
+    "apiRevision": "1",
+    "authenticationSettings": {},
+    "description": "",
+    "isCurrent": true,
+    "displayName": "am",
+    "protocols": [
+      "https"
+    ],
+    "serviceUrl": "https://odata-request-builder.kube.dvn.com/api/odata/schema/data_services/equipment",
+    "subscriptionKeyParameterNames": {
+      "header": "Ocp-Apim-Subscription-Key",
+      "query": "subscription-key"
+    },
+    "subscriptionRequired": false
+  }
+}

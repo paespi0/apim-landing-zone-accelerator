@@ -1,0 +1,8 @@
+{
+  "properties": {
+    "displayName": "odata",
+    "description": "Akana to APIM OData",
+    "state": "notPublished",
+    "subscriptionRequired": false
+  }
+}

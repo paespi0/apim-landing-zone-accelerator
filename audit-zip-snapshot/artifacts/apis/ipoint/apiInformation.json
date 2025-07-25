@@ -1,0 +1,19 @@
+{
+  "properties": {
+    "path": "ipoint",
+    "apiRevision": "1",
+    "authenticationSettings": {},
+    "description": "",
+    "isCurrent": true,
+    "displayName": "IPOINT",
+    "protocols": [
+      "https"
+    ],
+    "serviceUrl": "http://odcmsapgg011s.corp.dvn.com",
+    "subscriptionKeyParameterNames": {
+      "header": "Ocp-Apim-Subscription-Key",
+      "query": "subscription-key"
+    },
+    "subscriptionRequired": true
+  }
+}
