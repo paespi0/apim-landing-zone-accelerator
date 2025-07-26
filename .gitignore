@@ -359,3 +359,8 @@ publisher.exe
 publisher.pdb
 publisher.zip
 federated-credential.json
+
+# APIOps - Runtime dependencies (created when tools are executed)
+aspnetcorev2_inprocess.dll
+git2-*.dll
+common.pdb
