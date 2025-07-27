@@ -2,46 +2,47 @@
 
 *Key technical decisions made during APIOps migration and landing zone implementation*
 
-> **⚠️ Template Notice**: This decision log contains templated examples and organizational references. Adapt the content to reflect your specific architectural decisions, organizational context, and technical constraints.
+> 📝 **Important Note for Devon Reviewers**  
+> This architecture decision log was created during the sandbox phase by Microsoft CSA and engineering partners. These reflect early recommendations that Devon's architecture, security, and operations teams should review, ratify, or revise before production rollout.
 
 ## Decision Record Format
 
 Each decision includes:
 - **Context**: Why the decision was needed
 - **Options**: Alternatives considered
-- **Decision**: Chosen approach and rationale
-- **Consequences**: Trade-offs and implications
+- **Recommended Decision**: Chosen approach and rationale
+- **Implications**: Trade-offs and consequences
 
 ---
 
 ## ADR-001: Devon vs Microsoft Tenant Selection
 
 **Date**: July 2025  
-**Status**: ✅ Decided  
-**Deciders**: Platform Architecture Team
+**Status**: ✅ Sandbox Recommendation  
+**Sandbox Phase Authors**: Microsoft CSA and DevOps Contributor
 
 ### Context
-APIOps pipeline required selection between corporate tenant and Microsoft tenant for Azure resource deployment and authentication.
+APIOps pipeline required selection between Devon corporate tenant and Microsoft tenant for Azure resource deployment and authentication.
 
 ### Options Considered
 
 | Option | Pros | Cons |
 |--------|------|------|
-| **Corporate Tenant** | Existing governance, cost allocation, compliance alignment | Potential scalability limits, internal dependencies |
+| **Devon Corporate Tenant** | Existing governance, cost allocation, compliance alignment | Potential scalability limits, internal dependencies |
 | **Microsoft Tenant** | Azure native integration, tooling support, scalability | External dependency, compliance complexity |
 
-### Decision
-**Selected: Corporate Tenant**
+### Recommended Decision (to be reviewed by Devon)
+**Selected: Devon Corporate Tenant**
 
 **Rationale**:
-- Corporate governance and compliance requirements
+- Devon's corporate governance and compliance requirements
 - Existing identity management and access controls
-- Cost allocation aligned with corporate processes
-- Security policies and audit requirements in place
+- Cost allocation aligned with Devon's corporate processes
+- Security policies and audit requirements already in place
 
-### Consequences
+### Implications
 - **Positive**: Simplified compliance, existing governance, cost transparency
-- **Negative**: Potential scalability limitations, dependency on corporate IT
+- **Negative**: Potential scalability limitations, dependency on Devon corporate IT
 - **Mitigations**: Established escalation paths, documented service level agreements
 
 ---
@@ -49,8 +50,8 @@ APIOps pipeline required selection between corporate tenant and Microsoft tenant
 ## ADR-002: OIDC vs Service Principal Authentication
 
 **Date**: July 2025  
-**Status**: ✅ Decided  
-**Deciders**: Security Team, DevOps Team
+**Status**: ✅ Sandbox Recommendation  
+**Sandbox Phase Authors**: Microsoft CSA and DevOps Contributor
 
 ### Context
 GitHub Actions workflow required authentication method for Azure resource access, choosing between traditional service principal secrets and modern OIDC federation.
@@ -62,15 +63,15 @@ GitHub Actions workflow required authentication method for Azure resource access
 | **Service Principal + Secrets** | Medium | High maintenance | Good | Complex |
 | **OIDC Federation** | High | Low maintenance | Excellent | Simple |
 
-### Decision
+### Recommended Decision (to be reviewed by Devon)
 **Selected: OIDC Federation**
 
 **Technical Implementation**:
 ```json
 {
-  "name": "gh-<your-org>-<your-repo-name>",
+  "name": "gh-devon-apim-landing-zone-accelerator",
   "issuer": "https://token.actions.githubusercontent.com",
-  "subject": "repo:<your-github-org>/<your-repo-name>:ref:refs/heads/<your-branch>",
+  "subject": "repo:<devon-github-org>/<devon-repo-name>:ref:refs/heads/<devon-branch>",
   "audiences": ["api://AzureADTokenExchange"]
 }
 ```
@@ -81,7 +82,7 @@ GitHub Actions workflow required authentication method for Azure resource access
 - **Auditability**: Clear token lineage and usage tracking
 - **Modern**: Industry best practice for CI/CD authentication
 
-### Consequences
+### Implications
 - **Positive**: Enhanced security, reduced operational overhead, better audit trail
 - **Negative**: Newer technology, potential debugging complexity
 - **Mitigations**: Comprehensive documentation, fallback procedures established
@@ -91,38 +92,38 @@ GitHub Actions workflow required authentication method for Azure resource access
 ## ADR-003: Azure Region Selection
 
 **Date**: July 2025  
-**Status**: ✅ Decided  
-**Deciders**: Platform Team, Cost Optimization Team
+**Status**: ✅ Sandbox Recommendation  
+**Sandbox Phase Authors**: Microsoft CSA and DevOps Contributor
 
 ### Context
-APIM service deployment required region selection, balancing cost, performance, compliance, and feature availability.
+APIM service deployment required region selection, balancing cost, performance, compliance, and feature availability for Devon's workload.
 
 ### Options Considered
 
 | Region | Cost Profile | Latency | Compliance | Feature Set |
 |--------|-------------|---------|------------|-------------|
-| **Primary Option** | Standard pricing | Low to users | SOC 2 Type II | Full APIM features |
-| **Alternative 1** | Premium pricing | Medium latency | SOC 2 Type II | Full features |
-| **Alternative 2** | Budget pricing | Higher latency | SOC 2 Type II | Limited features |
+| **South Central US** | Standard pricing | Low to Devon users | SOC 2 Type II | Full APIM features |
+| **East US 2** | Premium pricing | Medium latency | SOC 2 Type II | Full features |
+| **Central US** | Budget pricing | Higher latency | SOC 2 Type II | Limited features |
 
-### Decision
-**Selected: Primary Regional Option**
+### Recommended Decision (to be reviewed by Devon)
+**Selected: South Central US (Devon's primary region)**
 
 **Service Configuration Template**:
 ```yaml
-Service Name: <your-apim-service-name>
-Resource Group: <your-resource-group-name>
+Service Name: apim-devon-prod-scus-001
+Resource Group: rg-apim-devon-prod-scus-001
 SKU: Developer Tier (for development) / Standard (for production)
-Location: <your-selected-region>
+Location: southcentralus
 ```
 
 **Rationale**:
 - **Cost Optimization**: Competitive pricing for selected tier
-- **Performance**: Acceptable latency to primary user base
-- **Compliance**: Meets organizational compliance requirements
+- **Performance**: Optimal latency to Devon's primary user base
+- **Compliance**: Meets Devon's organizational compliance requirements
 - **Feature Availability**: All required APIM features supported
 
-### Consequences
+### Implications
 - **Positive**: Cost optimization, adequate performance, compliance alignment
 - **Negative**: Single region deployment (no geo-redundancy initially)
 - **Mitigations**: Disaster recovery plan documented, multi-region roadmap planned
@@ -132,11 +133,11 @@ Location: <your-selected-region>
 ## ADR-004: Subscription Guard Strategy
 
 **Date**: July 2025  
-**Status**: ✅ Decided  
-**Deciders**: Security Team, Platform Team
+**Status**: ✅ Sandbox Recommendation  
+**Sandbox Phase Authors**: Microsoft CSA and DevOps Contributor
 
 ### Context
-APIOps pipeline needed protection against accidental production deployments while maintaining development agility.
+APIOps pipeline needed protection against accidental production deployments while maintaining development agility for Devon's environments.
 
 ### Options Considered
 
@@ -146,15 +147,15 @@ APIOps pipeline needed protection against accidental production deployments whil
 | **Environment Variables** | Medium | High | Medium |
 | **Parameter-based** | High | High | High |
 
-### Decision
+### Recommended Decision (to be reviewed by Devon)
 **Selected: Parameter-based Guards with Environment Variables**
 
 **Implementation**:
 ```json
-// infra/params/<your-environment>.json
+// infra/params/devon-dev.json
 {
   "subscriptionId": {
-    "value": "<your-target-subscription-id>"
+    "value": "devon-dev-subscription-id"
   },
   "environmentType": {
     "value": "development"
@@ -167,11 +168,11 @@ APIOps pipeline needed protection against accidental production deployments whil
 
 **Rationale**:
 - **Safety**: Explicit subscription targeting prevents cross-environment errors
-- **Flexibility**: Parameter files allow environment-specific configurations
+- **Flexibility**: Parameter files allow Devon's environment-specific configurations
 - **Auditability**: Clear deployment target in version control
-- **Scalability**: Easy to extend for multiple environments
+- **Scalability**: Easy to extend for Devon's multiple environments
 
-### Consequences
+### Implications
 - **Positive**: Strong protection, environment flexibility, clear audit trail
 - **Negative**: Additional parameter file maintenance
 - **Mitigations**: Automated validation, template standardization
@@ -181,11 +182,11 @@ APIOps pipeline needed protection against accidental production deployments whil
 ## ADR-005: API Extraction Format (JSON vs YAML)
 
 **Date**: July 2025  
-**Status**: ✅ Decided  
-**Deciders**: API Standards Team, DevOps Team
+**Status**: ✅ Sandbox Recommendation  
+**Sandbox Phase Authors**: Microsoft CSA and DevOps Contributor
 
 ### Context
-APIOps extractor tool supported multiple formats for OpenAPI specifications, requiring standardization for consistency and tooling compatibility.
+APIOps extractor tool supported multiple formats for OpenAPI specifications, requiring standardization for consistency and tooling compatibility within Devon's development workflow.
 
 ### Options Considered
 
@@ -194,7 +195,7 @@ APIOps extractor tool supported multiple formats for OpenAPI specifications, req
 | **JSON** | Low | Excellent | Poor diffs | Compact |
 | **YAML** | High | Good | Clean diffs | Verbose |
 
-### Decision
+### Recommended Decision (to be reviewed by Devon)
 **Selected: YAML for OpenAPI Specifications**
 
 **Configuration**:
@@ -206,12 +207,12 @@ indentSize: 2
 ```
 
 **Rationale**:
-- **Human Readability**: YAML more accessible for API documentation review
+- **Human Readability**: YAML more accessible for Devon's API documentation review
 - **Version Control**: Clean, meaningful diffs for change tracking
 - **Industry Standard**: OpenAPI community preference for YAML
 - **Tooling**: Spectral and other linting tools optimized for YAML
 
-### Consequences
+### Implications
 - **Positive**: Better readability, cleaner version control, industry alignment
 - **Negative**: Larger file sizes, potential YAML formatting issues
 - **Mitigations**: Automated validation, standardized formatting rules
@@ -221,11 +222,11 @@ indentSize: 2
 ## ADR-006: Test Strategy for APIOps Artifacts
 
 **Date**: July 2025  
-**Status**: ✅ Decided  
-**Deciders**: Quality Engineering Team, Security Team
+**Status**: ✅ Sandbox Recommendation  
+**Sandbox Phase Authors**: Microsoft CSA and DevOps Contributor
 
 ### Context
-APIOps pipeline required comprehensive testing strategy for 11 artifact types while maintaining security boundaries.
+APIOps pipeline required comprehensive testing strategy for 11 artifact types while maintaining security boundaries for Devon's APIM deployment.
 
 ### Analysis Results
 
@@ -235,7 +236,7 @@ APIOps pipeline required comprehensive testing strategy for 11 artifact types wh
 | **Partially Testable** | Backends, Diagnostics, Certificates, Versions | 4/11 (36%) | Medium risk |
 | **Security Excluded** | Named Values, Loggers | 2/11 (18%) | High risk |
 
-### Decision
+### Recommended Decision (to be reviewed by Devon)
 **Selected: Multi-layered Testing with Security Exclusions**
 
 **Testing Framework**:
@@ -260,7 +261,7 @@ testing:
 3. **Phase 3**: Backend connectivity validation (Month 3)
 4. **Phase 4**: Diagnostic configuration testing (Month 4)
 
-### Consequences
+### Implications
 - **Positive**: Strong quality gates, security compliance, systematic improvement
 - **Negative**: Initial coverage gaps, complex testing matrix
 - **Mitigations**: Phased rollout, comprehensive documentation, regular reviews
@@ -270,11 +271,11 @@ testing:
 ## ADR-007: Artifact Storage and Version Control Strategy
 
 **Date**: July 2025  
-**Status**: ✅ Decided  
-**Deciders**: DevOps Team, Security Team
+**Status**: ✅ Sandbox Recommendation  
+**Sandbox Phase Authors**: Microsoft CSA and DevOps Contributor
 
 ### Context
-APIOps artifacts required version control strategy balancing transparency, security, and operational efficiency.
+APIOps artifacts required version control strategy balancing transparency, security, and operational efficiency for Devon's APIM deployment.
 
 ### Artifact Classification
 
@@ -284,7 +285,7 @@ APIOps artifacts required version control strategy balancing transparency, secur
 | **Internal** | Version controlled with review | Product policies, API configurations |
 | **Confidential** | Excluded via .gitignore | Named values, logger credentials |
 
-### Decision
+### Recommended Decision (to be reviewed by Devon)
 **Selected: Selective Version Control with Security Exclusions**
 
 **Implementation**:
@@ -299,30 +300,31 @@ artifacts/**/*secret*
 **Rationale**:
 - **Security**: Sensitive data never enters version control
 - **Transparency**: Configuration changes fully auditable
-- **Compliance**: Meets corporate data classification requirements
+- **Compliance**: Meets Devon's corporate data classification requirements
 - **Operational**: Automated extraction without manual filtering
 
-### Consequences
+### Implications
 - **Positive**: Strong security, full audit trail for non-sensitive changes
 - **Negative**: Limited visibility into credential configurations
 - **Mitigations**: Separate credential management process, security reviews
 
 ---
 
-## Future Decisions
+## Future Decisions for Devon Review
 
 ### Pending Architecture Reviews
 
-| Decision | Timeline | Priority | Owner |
-|----------|----------|----------|-------|
-| **Multi-region Deployment** | Q3 2025 | Medium | Platform Team |
-| **Production Environment Setup** | Q4 2025 | High | DevOps Team |
-| **API Versioning Strategy** | Q2 2025 | Medium | API Standards Team |
-| **Monitoring and Alerting** | Q2 2025 | High | Operations Team |
+| Decision | Timeline | Priority | Devon Owner |
+|----------|----------|----------|-------------|
+| **Multi-region Deployment** | Q3 2025 | Medium | Devon Platform Team |
+| **Production Environment Setup** | Q4 2025 | High | Devon DevOps Team |
+| **API Versioning Strategy** | Q2 2025 | Medium | Devon API Standards Team |
+| **Monitoring and Alerting** | Q2 2025 | High | Devon Operations Team |
 
-### Decision Review Schedule
-- **Quarterly Reviews**: Every 3 months
-- **Annual Assessment**: Full architecture review
+### Decision Review Schedule for Devon
+- **Initial Review**: Before production deployment
+- **Quarterly Reviews**: Every 3 months after production
+- **Annual Assessment**: Full architecture review with Microsoft CSA
 - **Change Triggers**: Major feature releases, security incidents, compliance updates
 
 ---
@@ -341,4 +343,4 @@ artifacts/**/*secret*
 
 ---
 
-*Architecture Decision Log for APIM Landing Zone Accelerator - documenting key technical choices and rationale*
+*Architecture Decision Log for APIM Landing Zone Accelerator - sandbox phase recommendations for Devon Energy review*
