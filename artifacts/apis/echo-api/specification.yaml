@@ -1,6 +1,7 @@
 openapi: 3.0.1
 info:
   title: ""
+  description: "Test for Spectral lint failure"
   version: '1.0'
 servers:
   - url: https://apim-devon-dev-eastus2-uxs.azure-api.net/echo
