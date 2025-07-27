@@ -364,3 +364,6 @@ federated-credential.json
 aspnetcorev2_inprocess.dll
 git2-*.dll
 common.pdb
+
+# APIOps - Audit snapshots (keep local, exclude from repository)
+audit-zip-snapshot/

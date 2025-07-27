@@ -1,7 +1,0 @@
-{
-  "properties": {
-    "displayName": "dsurv-api-url",
-    "secret": false,
-    "value": "https://stg-dsurv-ncus-api.azurewebsites.net"
-  }
-}

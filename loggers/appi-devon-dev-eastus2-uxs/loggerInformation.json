@@ -1,0 +1,10 @@
+{
+  "properties": {
+    "loggerType": "applicationInsights",
+    "credentials": {
+      "instrumentationKey": "{{Logger-Credentials--6872a2c44634610e28a2162a}}"
+    },
+    "isBuffered": true,
+    "resourceId": "/subscriptions/5734f8d9-881b-4d80-96d3-abd833647290/resourceGroups/rg-shared-devon-dev-eastus2-uxs/providers/Microsoft.Insights/components/appi-devon-dev-eastus2-uxs"
+  }
+}

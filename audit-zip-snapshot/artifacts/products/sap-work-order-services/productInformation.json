@@ -1,9 +1,0 @@
-{
-  "properties": {
-    "displayName": "SAP Work Orders",
-    "description": "SAP Work Order APIs only",
-    "approvalRequired": false,
-    "state": "notPublished",
-    "subscriptionRequired": true
-  }
-}

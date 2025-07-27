@@ -1,7 +1,0 @@
-{
-  "properties": {
-    "displayName": "pi-drilling-url",
-    "secret": false,
-    "value": "https://drillingapi.pre.dvn.com"
-  }
-}

@@ -1,9 +1,0 @@
-{
-  "properties": {
-    "displayName": "test-key",
-    "keyVault": {
-      "secretIdentifier": "https://apim-dvn-pre-kv.vault.azure.net/secrets/ensKey"
-    },
-    "secret": true
-  }
-}

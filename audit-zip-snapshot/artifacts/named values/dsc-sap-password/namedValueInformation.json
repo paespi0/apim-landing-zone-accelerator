@@ -1,9 +1,0 @@
-{
-  "properties": {
-    "displayName": "dsc-sap-password",
-    "keyVault": {
-      "secretIdentifier": "https://apim-dvn-pre-kv.vault.azure.net/secrets/dscSapPassword"
-    },
-    "secret": true
-  }
-}

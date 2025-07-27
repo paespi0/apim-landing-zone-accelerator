@@ -1,0 +1,10 @@
+### ✅ Step 4.3 – Red/Green CI Enforcement Validation Complete
+
+| Test | Status | Checks Tab | Notes |
+|------|--------|------------|-------|
+| `subscriptions/test.json` | ❌ Blocked | ✅ Visible | Subscription folder correctly failed the security job |
+| Invalid OpenAPI title | ❌ Blocked | ✅ Visible | Spectral lint job correctly failed on schema violation |
+| Post-revert | ✅ Green | ✅ Visible | All checks passed on clean commit |
+
+🔒 CI/CD safety guards are fully functional and protect the codebase from schema and scope issues.  
+🛡️ GitHub-native CI now meets governance requirements for secure APIM publishing.

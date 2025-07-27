@@ -1,7 +1,0 @@
-{
-  "properties": {
-    "displayName": "ensUrl",
-    "secret": false,
-    "value": "https://dvn-ens-dev-fn.azurewebsites.net/api"
-  }
-}

@@ -1,7 +1,0 @@
-{
-  "properties": {
-    "displayName": "dsc-sap-username",
-    "secret": false,
-    "value": "XSVCDSCGW"
-  }
-}

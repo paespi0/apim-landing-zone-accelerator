@@ -1,7 +1,0 @@
-{
-  "properties": {
-    "displayName": "fme-url",
-    "secret": false,
-    "value": "http://fme.pre.dvn.com/fmedatastreaming"
-  }
-}

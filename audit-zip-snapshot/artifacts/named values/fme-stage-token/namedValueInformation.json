@@ -1,9 +1,0 @@
-{
-  "properties": {
-    "displayName": "fme-stage-token",
-    "keyVault": {
-      "secretIdentifier": "https://apim-dvn-pre-kv.vault.azure.net/secrets/fmeStageToken"
-    },
-    "secret": true
-  }
-}

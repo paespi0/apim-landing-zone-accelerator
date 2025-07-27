@@ -1,7 +1,0 @@
-{
-  "properties": {
-    "displayName": "openid-url",
-    "secret": false,
-    "value": "https://login.microsoftonline.com/489f0f3b-e6ac-4928-b4f6-cfc55482e14e/.well-known/openid-configuration"
-  }
-}

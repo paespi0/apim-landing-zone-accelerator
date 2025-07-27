@@ -1,7 +1,0 @@
-{
-  "properties": {
-    "displayName": "dsc-client-url",
-    "secret": false,
-    "value": "https://dvn-dsc-ci-api.azurewebsites.net"
-  }
-}

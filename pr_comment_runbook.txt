@@ -1,0 +1,1 @@
+📘 Runbook and Decision Log added – covers deployment SOPs, toggle guards, and key architecture rationale.

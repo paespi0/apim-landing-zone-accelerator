@@ -1,9 +1,0 @@
-{
-  "properties": {
-    "displayName": "SAP EAM Services",
-    "description": "SAP EAM Services that are used by the DSC Portal",
-    "approvalRequired": false,
-    "state": "notPublished",
-    "subscriptionRequired": true
-  }
-}

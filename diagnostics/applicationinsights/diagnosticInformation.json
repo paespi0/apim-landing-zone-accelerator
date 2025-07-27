@@ -1,0 +1,37 @@
+{
+  "properties": {
+    "loggerId": "/subscriptions/5734f8d9-881b-4d80-96d3-abd833647290/resourceGroups/rg-apim-devon-dev-eastus2-uxs/providers/Microsoft.ApiManagement/service/apim-devon-dev-eastus2-uxs/loggers/appi-devon-dev-eastus2-uxs",
+    "alwaysLog": "allErrors",
+    "backend": {
+      "request": {
+        "dataMasking": {
+          "queryParams": [
+            {
+              "mode": "Hide",
+              "value": "*"
+            }
+          ]
+        }
+      }
+    },
+    "frontend": {
+      "request": {
+        "dataMasking": {
+          "queryParams": [
+            {
+              "mode": "Hide",
+              "value": "*"
+            }
+          ]
+        }
+      }
+    },
+    "httpCorrelationProtocol": "Legacy",
+    "logClientIp": true,
+    "metrics": true,
+    "sampling": {
+      "percentage": 100,
+      "samplingType": "fixed"
+    }
+  }
+}

@@ -1,9 +1,0 @@
-{
-  "properties": {
-    "displayName": "MapHub",
-    "description": "MapHub API",
-    "approvalRequired": false,
-    "state": "notPublished",
-    "subscriptionRequired": true
-  }
-}
