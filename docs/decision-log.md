@@ -2,6 +2,8 @@
 
 *Key technical decisions made during APIOps migration and landing zone implementation*
 
+> **⚠️ Template Notice**: This decision log contains templated examples and organizational references. Adapt the content to reflect your specific architectural decisions, organizational context, and technical constraints.
+
 ## Decision Record Format
 
 Each decision includes:
@@ -19,23 +21,23 @@ Each decision includes:
 **Deciders**: Platform Architecture Team
 
 ### Context
-APIOps pipeline required selection between Devon corporate tenant and Microsoft tenant for Azure resource deployment and authentication.
+APIOps pipeline required selection between corporate tenant and Microsoft tenant for Azure resource deployment and authentication.
 
 ### Options Considered
 
 | Option | Pros | Cons |
 |--------|------|------|
-| **Devon Tenant** | Corporate compliance, existing governance, cost allocation | Limited scalability, internal dependencies |
-| **Microsoft Tenant** | Azure native integration, better tooling support, scalability | External dependency, compliance complexity |
+| **Corporate Tenant** | Existing governance, cost allocation, compliance alignment | Potential scalability limits, internal dependencies |
+| **Microsoft Tenant** | Azure native integration, tooling support, scalability | External dependency, compliance complexity |
 
 ### Decision
-**Selected: Devon Tenant**
+**Selected: Corporate Tenant**
 
 **Rationale**:
-- Corporate governance and compliance requirements mandate use of internal tenant
-- Existing identity management and access controls already established
-- Cost allocation and budgeting aligned with corporate processes
-- Security policies and audit requirements already configured
+- Corporate governance and compliance requirements
+- Existing identity management and access controls
+- Cost allocation aligned with corporate processes
+- Security policies and audit requirements in place
 
 ### Consequences
 - **Positive**: Simplified compliance, existing governance, cost transparency
@@ -66,9 +68,9 @@ GitHub Actions workflow required authentication method for Azure resource access
 **Technical Implementation**:
 ```json
 {
-  "name": "gh-paespi0-apim-landing-zone-accelerator",
+  "name": "gh-<your-org>-<your-repo-name>",
   "issuer": "https://token.actions.githubusercontent.com",
-  "subject": "repo:paespi0/apim-landing-zone-accelerator:ref:refs/heads/import",
+  "subject": "repo:<your-github-org>/<your-repo-name>:ref:refs/heads/<your-branch>",
   "audiences": ["api://AzureADTokenExchange"]
 }
 ```
@@ -86,7 +88,7 @@ GitHub Actions workflow required authentication method for Azure resource access
 
 ---
 
-## ADR-003: East US 2 Region Selection
+## ADR-003: Azure Region Selection
 
 **Date**: July 2025  
 **Status**: ✅ Decided  
@@ -97,31 +99,31 @@ APIM service deployment required region selection, balancing cost, performance, 
 
 ### Options Considered
 
-| Region | Cost | Latency | Compliance | Feature Set |
-|--------|------|---------|------------|-------------|
-| **East US** | High | Medium | ✅ SOC 2 | Full |
-| **East US 2** | Medium | Low | ✅ SOC 2 | Full |
-| **Central US** | Low | High | ✅ SOC 2 | Limited |
+| Region | Cost Profile | Latency | Compliance | Feature Set |
+|--------|-------------|---------|------------|-------------|
+| **Primary Option** | Standard pricing | Low to users | SOC 2 Type II | Full APIM features |
+| **Alternative 1** | Premium pricing | Medium latency | SOC 2 Type II | Full features |
+| **Alternative 2** | Budget pricing | Higher latency | SOC 2 Type II | Limited features |
 
 ### Decision
-**Selected: East US 2**
+**Selected: Primary Regional Option**
 
-**Service Configuration**:
+**Service Configuration Template**:
 ```yaml
-Service Name: apim-devon-dev-eastus2-uxs
-Resource Group: rg-apim-devon-dev-eastus2-uxs
-SKU: Developer Tier
-Location: East US 2
+Service Name: <your-apim-service-name>
+Resource Group: <your-resource-group-name>
+SKU: Developer Tier (for development) / Standard (for production)
+Location: <your-selected-region>
 ```
 
 **Rationale**:
-- **Cost Optimization**: 15% lower than East US
-- **Performance**: Low latency to primary user base
-- **Compliance**: SOC 2 Type II certified
-- **Feature Availability**: Full APIM feature set supported
+- **Cost Optimization**: Competitive pricing for selected tier
+- **Performance**: Acceptable latency to primary user base
+- **Compliance**: Meets organizational compliance requirements
+- **Feature Availability**: All required APIM features supported
 
 ### Consequences
-- **Positive**: Cost savings, optimal performance, compliance alignment
+- **Positive**: Cost optimization, adequate performance, compliance alignment
 - **Negative**: Single region deployment (no geo-redundancy initially)
 - **Mitigations**: Disaster recovery plan documented, multi-region roadmap planned
 
@@ -149,10 +151,10 @@ APIOps pipeline needed protection against accidental production deployments whil
 
 **Implementation**:
 ```json
-// infra/params/sandbox.json
+// infra/params/<your-environment>.json
 {
   "subscriptionId": {
-    "value": "5734f8d9-881b-4d80-96d3-abd833647290"
+    "value": "<your-target-subscription-id>"
   },
   "environmentType": {
     "value": "development"

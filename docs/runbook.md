@@ -2,12 +2,14 @@
 
 *Standard Operating Procedures for APIOps CI/CD Pipeline Management*
 
+> **⚠️ Template Notice**: This runbook contains template values marked with `<your-*>` placeholders. Replace all placeholders with your actual environment-specific values before use. Do not commit actual credentials or sensitive identifiers to version control.
+
 ## Quick Reference
 
 | Component | Status Check | Emergency Contact |
 |-----------|--------------|-------------------|
 | GitHub Actions | [Workflow Status](.github/workflows/apim-ci.yml) | DevOps Team |
-| APIM Service | `apim-devon-dev-eastus2-uxs` | Platform Team |
+| APIM Service | `<your-apim-service-name>` | Platform Team |
 | Spectral Linting | PR Quality Gates | API Standards Team |
 | Artifact Security | `.gitignore` exclusions | Security Team |
 
@@ -17,30 +19,30 @@
 
 #### Required GitHub Variables
 ```bash
-AZURE_CLIENT_ID=21699d40-4802-42c5-abb0-bac88a3101e1
-AZURE_TENANT_ID=<tenant-guid>
-AZURE_SUBSCRIPTION_ID=5734f8d9-881b-4d80-96d3-abd833647290
+AZURE_CLIENT_ID=<your-service-principal-client-id>
+AZURE_TENANT_ID=<your-azure-tenant-id>
+AZURE_SUBSCRIPTION_ID=<your-target-subscription-id>
 ```
 
 #### Required GitHub Secrets
 - None (using OIDC authentication)
 
 #### Federated Identity Setup
-1. **Service Principal**: `21699d40-4802-42c5-abb0-bac88a3101e1`
-2. **Subject**: `repo:paespi0/apim-landing-zone-accelerator:ref:refs/heads/import`
+1. **Service Principal**: `<your-service-principal-client-id>`
+2. **Subject**: `repo:<your-github-org>/<your-repo-name>:ref:refs/heads/<your-branch>`
 3. **Issuer**: `https://token.actions.githubusercontent.com`
 
 ### 2. APIM Service Configuration
 
 #### Target Environment
-- **Service**: `apim-devon-dev-eastus2-uxs`
-- **Resource Group**: `rg-apim-devon-dev-eastus2-uxs`
-- **Region**: East US 2
-- **Subscription**: Devon Dev (5734f8d9-881b-4d80-96d3-abd833647290)
+- **Service**: `<your-apim-service-name>`
+- **Resource Group**: `<your-resource-group-name>`
+- **Region**: `<your-selected-region>`
+- **Subscription**: `<your-subscription-name> (<subscription-id>)`
 
 #### Parameter File Location
 ```
-infra/params/sandbox.json
+infra/params/<your-environment>.json
 ```
 
 ### 3. APIOps Tools Version
@@ -55,12 +57,12 @@ infra/params/sandbox.json
 #### Health Check Procedure
 1. **Verify Workflow Status**
    ```bash
-   gh workflow list --repo paespi0/apim-landing-zone-accelerator
+   gh workflow list --repo <your-github-org>/<your-repo-name>
    ```
 
 2. **Check APIM Service Health**
    ```bash
-   az apim show --name apim-devon-dev-eastus2-uxs --resource-group rg-apim-devon-dev-eastus2-uxs
+   az apim show --name <your-apim-service> --resource-group <your-resource-group>
    ```
 
 3. **Validate Security Exclusions**
@@ -105,10 +107,10 @@ infra/params/sandbox.json
 
 #### Production Subscription Lock
 ```json
-// In infra/params/sandbox.json
+// In infra/params/<your-environment>.json
 {
   "subscriptionId": {
-    "value": "5734f8d9-881b-4d80-96d3-abd833647290"  // Dev only
+    "value": "<your-target-subscription-id>"  // Environment-specific
   },
   "deployToProduction": {
     "value": false  // Hard lock for production
@@ -236,7 +238,7 @@ artifacts/**/*key*
 #### Immediate Actions
 1. **Disable Workflow**
    ```bash
-   gh workflow disable apim-ci.yml --repo paespi0/apim-landing-zone-accelerator
+   gh workflow disable apim-ci.yml --repo <your-github-org>/<your-repo-name>
    ```
 
 2. **Revert Last Deployment**
