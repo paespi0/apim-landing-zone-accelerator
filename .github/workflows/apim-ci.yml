@@ -83,7 +83,7 @@ jobs:
       - name: Run Spectral linting
         run: |
           if [ -d "artifacts/apis" ]; then
-            spectral lint --format stylish artifacts/apis/**/*.json -r https://raw.githubusercontent.com/connectedcircuits/devops-api-linter/main/rules.yaml
+            spectral lint --format stylish artifacts/apis/**/*.yaml -r https://raw.githubusercontent.com/connectedcircuits/devops-api-linter/main/rules.yaml
           else
             echo "No API artifacts found to lint"
           fi
