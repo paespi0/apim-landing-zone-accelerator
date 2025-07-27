@@ -88,6 +88,41 @@ jobs:
             echo "No API artifacts found to lint"
           fi
 
+  # Security validation - check for prohibited artifacts
+  security:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check for prohibited subscription artifacts
+        run: |
+          if [ -d "artifacts/subscriptions" ]; then
+            echo "❌ SECURITY VIOLATION: Subscription artifacts detected!"
+            echo "The artifacts/subscriptions/ folder contains sensitive subscription-level configurations."
+            echo "This data should never be committed to version control for security reasons."
+            echo ""
+            echo "Files found:"
+            find artifacts/subscriptions -type f
+            echo ""
+            echo "Please remove these files and add artifacts/subscriptions/ to .gitignore"
+            exit 1
+          else
+            echo "✅ Security check passed: No prohibited subscription artifacts found"
+          fi
+
+      - name: Check for sensitive named values
+        run: |
+          if find artifacts -name "*credential*" -o -name "*secret*" -o -name "*key*" | grep -q .; then
+            echo "❌ SECURITY VIOLATION: Potential credential files detected!"
+            echo "Files found:"
+            find artifacts -name "*credential*" -o -name "*secret*" -o -name "*key*"
+            echo ""
+            echo "Please review these files and ensure no credentials are committed."
+            exit 1
+          else
+            echo "✅ Security check passed: No credential files detected"
+          fi
+
   # Deploy APIM configuration when merging to import
   deploy:
     if: github.event_name == 'push' && github.ref == 'refs/heads/import'
