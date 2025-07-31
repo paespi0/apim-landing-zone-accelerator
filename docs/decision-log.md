@@ -339,7 +339,7 @@ artifacts/**/*secret*
 ### Related Decisions
 - See `docs/test-gap-closure-plan.md` for testing strategy details
 - See `docs/runbook.md` for operational procedures
-- See `docs/step-4.1-artifact-testability-analysis.md` for technical analysis
+- See `docs/artifact-testability-analysis.md` for technical analysis
 
 ---
 

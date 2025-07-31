@@ -366,4 +366,31 @@ git2-*.dll
 common.pdb
 
 # APIOps - Audit snapshots (keep local, exclude from repository)
+# Exclude audit snapshot directories
 audit-zip-snapshot/
+
+# Enhanced security patterns for customer delivery
+**/deployment-outputs-*.json
+deployment-outputs-*.json
+**/*devon*.json
+**/*-dev-*.json
+**/*-prod-*.json
+federated-credential*.json
+*.credential.json
+**/audit-*/
+customer-audit/
+extractor-output/
+extraction-analysis/
+customer-data/
+**/loggers/**/loggerInformation.json
+**/diagnostics/**/diagnosticInformation.json
+.env
+.env.*
+*.env
+
+# Customer-specific parameter files
+infra/params/*devon*.json
+infra/params/*-dev-*.json
+infra/params/*-test-*.json
+infra/params/*-staging-*.json
+infra/params/*-prod-*.json
