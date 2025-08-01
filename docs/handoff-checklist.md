@@ -116,6 +116,9 @@
 ### 🔧 **Technical References**
 - **[Test Gap Closure Plan](./test-gap-closure-plan.md)** - 4-phase testing improvement roadmap
 - **[Artifact Testability Analysis](./artifact-testability-analysis.md)** - Detailed testing analysis
+- **[Audit API Testability Analysis](./audit-api-testability-analysis.md)** - Devon's legacy APIM validation analysis
+- **[Promotion Strategy](./promotion-strategy.md)** - Multi-environment CI/CD strategy
+- **[Final Evaluation](./final-evaluation.md)** - Sandbox completion assessment
 - **[Naming Conventions](./naming-conventions.md)** - Resource naming standards
 - **[Legacy Migration Analysis](./legacy-migration-analysis.md)** - Migration considerations
 

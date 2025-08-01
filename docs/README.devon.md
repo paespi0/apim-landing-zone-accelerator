@@ -167,6 +167,10 @@ git push origin feature/api-updates
 
 ### 🏗️ **Technical Implementation**
 - **[Artifact Testability Analysis](./artifact-testability-analysis.md)** - Detailed analysis of testing capabilities
+- **[Audit API Testability Analysis](./audit-api-testability-analysis.md)** - Devon's legacy APIM validation analysis
+- **[Promotion Strategy](./promotion-strategy.md)** - Multi-environment CI/CD deployment strategy
+- **[Final Evaluation](./final-evaluation.md)** - Sandbox phase completion assessment
+- **[Security Assessment](./security-assessment.md)** - Comprehensive security validation
 - **[Naming Conventions](./naming-conventions.md)** - Resource naming standards for Devon environments
 - **[Network Integration](./README-network.md)** - Network topology and integration guidance
 

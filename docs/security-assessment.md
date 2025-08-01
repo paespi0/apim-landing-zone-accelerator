@@ -134,7 +134,7 @@ Add customer direction section:
 ```markdown
 ## 🚀 For Devon Energy Implementation
 
-**Devon Energy customers**: Please see **[Devon Energy Implementation Guide](./docs/README.devon.md)** for customer-specific setup instructions, configuration templates, and production deployment guidelines.
+**Devon Energy customers**: Please see **[Devon Energy Implementation Guide](./README.devon.md)** for customer-specific setup instructions, configuration templates, and production deployment guidelines.
 
 This guide includes:
 - Complete setup instructions for your environment
