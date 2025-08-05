@@ -121,6 +121,7 @@
 - **[Final Evaluation](./final-evaluation.md)** - Sandbox completion assessment
 - **[Naming Conventions](./naming-conventions.md)** - Resource naming standards
 - **[Legacy Migration Analysis](./legacy-migration-analysis.md)** - Migration considerations
+- **[Legacy APIM Migration Guide](./legacy-apim-migration-guide.md)** - Comprehensive strategies for existing APIM instances
 
 ### ⚙️ **Configuration Files**
 - **[GitHub Actions Workflow](../.github/workflows/apim-ci.yml)** - CI/CD pipeline configuration
