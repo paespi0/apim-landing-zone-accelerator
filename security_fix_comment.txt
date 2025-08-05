@@ -1,9 +1,0 @@
-🔒 **Security Fix Applied**: Removed sensitive data from documentation
-
-**Issues Addressed**:
-- ❌ Actual client IDs and subscription IDs replaced with `<template-placeholders>`
-- ❌ Specific repository names and org references removed
-- ❌ Unsupported cost claims (e.g., "15% lower") removed
-- ❌ Environment-specific service names templated
-
-**Customer Handover Ready**: Documents now contain template warnings and are suitable for customer delivery without exposing internal identifiers.
