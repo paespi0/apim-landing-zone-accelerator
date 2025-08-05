@@ -552,7 +552,7 @@ prod-alerts:
 
 ### 🔧 **Technical References**
 - **[Decision Log](./decision-log.md)** - Complete architectural decision record
-- **[Artifact Testability Analysis](./artifact-testability-analysis.md)** - Testing capabilities analysis
+- **[Audit API Testability Analysis](./audit-api-testability-analysis.md)** - Testing capabilities analysis
 - **[Test Gap Closure Plan](./test-gap-closure-plan.md)** - Testing improvement roadmap
 
 ---
