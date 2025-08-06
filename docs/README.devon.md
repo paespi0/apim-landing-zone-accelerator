@@ -7,6 +7,31 @@
 
 ---
 
+## 🔄 **For Existing APIM Customers**
+
+**Already have an APIM instance created via Azure Portal, PowerShell, or ARM templates?**
+
+See our **[Legacy APIM Migration Guide](./legacy-apim-migration-guide.md)** for comprehensive guidance on:
+- **Migration strategies** (parallel deployment vs. in-place adoption)
+- **Risk assessment frameworks** for different migration approaches  
+- **Step-by-step checklists** for business continuity during migration
+- **Common migration patterns** for named values, policies, and networking
+- **Troubleshooting guides** for typical migration challenges
+
+**Migration Options:**
+- **Strategy A**: Parallel Environment (recommended for production) - 4-6 weeks
+- **Strategy B**: In-Place IaC Adoption (for dev/staging) - 2-3 weeks  
+- **Strategy C**: Greenfield Migration (major architecture changes) - 8-12 weeks
+
+**Key Benefits of Migration:**
+- Infrastructure as Code management
+- Automated CI/CD with quality gates
+- Enhanced security with Key Vault integration
+- Improved operational efficiency
+- Better compliance and audit capabilities
+
+---
+
 ## Executive Summary
 
 This repository contains a working implementation of the Azure API Management Landing Zone Accelerator, specifically configured for Devon Energy's evaluation during the sandbox phase. The implementation includes automated CI/CD pipelines, infrastructure-as-code templates, and comprehensive documentation to support Devon's transition to modern API management practices.
