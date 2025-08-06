@@ -173,7 +173,7 @@ nslookup apiservicejx6p2m5bi3lky.azure-api.net
 
 ---
 
-## ADR-004: Deployment Safety Controls
+## ADR-004: CI/CD Safety Gates and Subscription Guard
 
 **Date**: July 2025  
 **Status**: ✅ Implementation Complete  
@@ -181,60 +181,97 @@ nslookup apiservicejx6p2m5bi3lky.azure-api.net
 
 ### Context
 
-CI/CD pipeline required safeguards to prevent accidental cross-environment deployments while maintaining deployment flexibility for different environments.
+APIOps CI/CD pipeline required comprehensive safety controls to prevent security violations and accidental deployments. Two critical safety mechanisms needed implementation: subscription-level artifact protection and environment-based deployment controls.
 
 ### Options Considered
 
-| Approach                                        | Safety Level | Flexibility | Implementation   |
-| ----------------------------------------------- | ------------ | ----------- | ---------------- |
-| **Hard-coded Subscription IDs**           | High         | Low         | Simple but rigid |
-| **Environment Variables**                 | Medium       | High        | Good balance     |
-| **GitHub Actions + Parameter Validation** | High         | High        | Best practice    |
+| Safety Control                                    | Security Level | Scope                | Implementation Complexity |
+| ------------------------------------------------- | -------------- | -------------------- | ------------------------- |
+| **Manual Code Reviews Only**                | Low            | Human-dependent      | Simple but unreliable     |
+| **Basic Branch Protection**                 | Medium         | Repository-level     | Good but insufficient     |
+| **CI-based Security Gates + Environment Controls** | High           | Multi-layered        | Best practice (selected)  |
 
 ### Decision
 
-**Selected: GitHub Actions Environment Protection with Parameter Validation**
+**Selected: Multi-layered CI/CD Safety Gates with Automated Subscription Guard**
 
-**Implementation**:
+**Implementation Overview**:
+
+1. **Subscription Artifact Guard** (`.github/workflows/apim-ci.yml` - security job)
+2. **GitHub Environment Protection** (branch-scoped deployments)
+3. **Automated Security Scanning** (credential detection)
+
+**Subscription Guard Implementation**:
 
 ```yaml
-# .github/workflows/apim-ci.yml
-jobs:
-  validate-target:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Validate Deployment Target
-        run: |
-          EXPECTED_SUB=$(jq -r '.parameters.subscriptionId.value' infra/params/${{ github.ref_name }}.json)
-          if [ "$EXPECTED_SUB" != "${{ secrets.AZURE_SUBSCRIPTION_ID }}" ]; then
-            echo "❌ Subscription mismatch detected"
-            exit 1
-          fi
+# .github/workflows/apim-ci.yml - Security Job
+security:
+  runs-on: ubuntu-latest
+  steps:
+    - uses: actions/checkout@v4
+    
+    - name: Check for prohibited subscription artifacts
+      run: |
+        if [ -d "artifacts/subscriptions" ]; then
+          echo "❌ SECURITY VIOLATION: Subscription artifacts detected!"
+          echo "The artifacts/subscriptions/ folder contains sensitive subscription-level configurations."
+          echo "This data should never be committed to version control for security reasons."
+          find artifacts/subscriptions -type f
+          echo "Please remove these files and add artifacts/subscriptions/ to .gitignore"
+          exit 1
+        else
+          echo "✅ Security check passed: No prohibited subscription artifacts found"
+        fi
 ```
 
-**Parameter File Structure**:
+**What the Subscription Guard Protects**:
+- **Subscription-level configurations**: Network policies, access controls, billing information
+- **Tenant-specific settings**: Identity providers, custom domains, security configurations  
+- **Cross-tenant data**: Prevents accidental exposure of Devon's subscription details
 
-```json
-// infra/params/devon-prod.json
-{
-  "subscriptionId": {"value": "devon-production-subscription-id"},
-  "environment": {"value": "production"},
-  "resourceGroup": {"value": "rg-apim-devon-prod-ncus-001"}
-}
+**How It Works**:
+1. **PR Check**: Runs on every pull request to `import` branch
+2. **Automated Scanning**: Detects `artifacts/subscriptions/` folder presence
+3. **Fail-Fast**: Blocks merge if subscription artifacts are detected
+4. **Clear Guidance**: Provides specific remediation steps to developers
+
+**GitHub Environment Controls**:
+
+```yaml
+# Environment-specific deployment scoping
+on:
+  push:
+    branches: [import]  # Only deploys from import branch
+  pull_request:
+    branches: [import]  # Only validates against import branch
+```
+
+**Additional Security Layers**:
+
+```yaml
+- name: Check for sensitive named values
+  run: |
+    if find artifacts -name "*credential*" -o -name "*secret*" -o -name "*key*" | grep -q .; then
+      echo "❌ SECURITY VIOLATION: Potential credential files detected!"
+      find artifacts -name "*credential*" -o -name "*secret*" -o -name "*key*"
+      exit 1
 ```
 
 **Rationale**:
 
-- **GitHub Best Practice**: Leverages GitHub Environments for approval workflows
-- **Parameter Validation**: Cross-checks target subscription with environment configuration
-- **Microsoft Guidance**: Aligns with Azure DevOps deployment safety recommendations
-- **Audit Trail**: Complete deployment history in GitHub Actions logs
+- **Microsoft Security**: Aligns with Azure DevOps security best practices and GitOps principles
+- **Defense in Depth**: Multiple validation layers prevent different types of security violations
+- **APIOps Standard**: Follows Microsoft's official APIOps security guidance for artifact management
+- **Compliance Ready**: Provides audit trail and prevents accidental credential exposure
+- **Developer Experience**: Clear error messages guide developers to correct security violations
 
 ### Implications
 
-- **Safety**: Prevents accidental production deployments through multiple validation layers
-- **Governance**: Supports approval gates for sensitive environments
-- **Scalability**: Easy to extend for Devon's multiple environments (dev/test/staging/prod)
+- **Security Posture**: Prevents subscription-level data leakage and credential exposure
+- **Compliance**: Automated gates support SOX and regulatory audit requirements  
+- **Operational Safety**: Branch protection ensures only validated changes reach target environments
+- **Scalability**: Pattern extends to Devon's full environment hierarchy (dev/test/staging/prod)
+- **Audit Trail**: Complete security validation history preserved in GitHub Actions logs
 
 ---
 
@@ -425,6 +462,236 @@ artifacts/**/*secret*
 - [APIOps Best Practices](https://azure.github.io/apiops/)
 - [Azure APIM Documentation](https://docs.microsoft.com/en-us/azure/api-management/)
 - [OIDC Federation Guide](https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/about-security-hardening-with-openid-connect)
+
+### Related Decisions
+
+- See `docs/test-gap-closure-plan.md` for testing strategy details
+- See `docs/runbook.md` for operational procedures
+- See `docs/artifact-testability-analysis.md` for technical analysis
+
+---
+
+## ADR-008: Environment-Specific Parameter Files Strategy
+
+**Date**: August 2025  
+**Status**: 🔄 Implementation Required  
+**Authors**: Microsoft CSA
+
+### Context
+
+Devon Energy's APIM Landing Zone Accelerator requires a scalable approach to manage infrastructure parameters across multiple environments (development, test, staging, production). The current sandbox implementation uses a single `sandbox.json` parameter file, which is insufficient for enterprise multi-environment deployment patterns.
+
+**Key Requirements**:
+- Separate Azure subscriptions for environment isolation
+- Environment-specific resource naming and configuration
+- Prevention of accidental cross-environment deployments
+- Support for GitOps promotion workflows
+- Alignment with Microsoft Well-Architected Framework principles
+
+### Options Considered
+
+| Approach | Benefits | Considerations |
+|----------|----------|----------------|
+| **Single Parameter File** | Simple, current state | No environment isolation, high risk |
+| **Environment Variables** | Flexible, CI/CD friendly | Secrets exposure risk, difficult audit |
+| **Environment-Specific Files** | Clear separation, auditable | Multiple files to maintain |
+| **Dynamic Parameter Generation** | Flexible, template-based | Complex, difficult to validate |
+
+### Recommended Decision
+
+**Selected: Environment-Specific Parameter Files with Structured Naming Convention**
+
+**Implementation Pattern**:
+
+```
+infra/params/
+├── devon-dev.json      # Development environment
+├── devon-test.json     # Testing environment  
+├── devon-staging.json  # Staging environment
+└── devon-prod.json     # Production environment
+```
+
+**File Structure Template**:
+
+```json
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "location": { "value": "southcentralus" },
+    "workloadName": { "value": "devon" },
+    "environment": { "value": "dev|test|staging|prod" },
+    "identifier": { "value": "scus" },
+    
+    "subscriptionId": { "value": "environment-specific-subscription-guid" },
+    "appGatewayFqdn": { "value": "api-{env}.devon.energy" },
+    "appGatewayCertType": { "value": "KeyVault|SelfSigned" },
+    
+    "monitoring": {
+      "value": {
+        "level": "basic|standard|enhanced",
+        "retentionDays": 7|14|30|90
+      }
+    },
+    "security": {
+      "value": {
+        "requireHttps": true,
+        "allowedOrigins": ["https://devon-{env}.local"]
+      }
+    },
+    "backup": {
+      "value": {
+        "enabled": false|true,
+        "frequency": "none|daily|weekly",
+        "retentionDays": 0|30|90
+      }
+    }
+  }
+}
+```
+
+**Environment-Specific Examples**:
+
+**Development Environment** (`devon-dev.json`):
+```json
+{
+  "parameters": {
+    "environment": { "value": "dev" },
+    "subscriptionId": { "value": "11111111-1111-1111-1111-111111111111" },
+    "tier": { "value": "Developer" },
+    "monitoring": { 
+      "value": { "level": "basic", "retentionDays": 7 }
+    },
+    "backup": { 
+      "value": { "enabled": false }
+    }
+  }
+}
+```
+
+**Production Environment** (`devon-prod.json`):
+```json
+{
+  "parameters": {
+    "environment": { "value": "prod" },
+    "subscriptionId": { "value": "44444444-4444-4444-4444-444444444444" },
+    "tier": { "value": "Premium" },
+    "monitoring": { 
+      "value": { "level": "enhanced", "retentionDays": 90 }
+    },
+    "backup": { 
+      "value": { "enabled": true, "frequency": "daily", "retentionDays": 30 }
+    }
+  }
+}
+```
+
+### GitHub Actions Integration
+
+**Workflow Enhancement** (reference: `.github/workflows/apim-ci.yml`):
+
+```yaml
+- name: Load Environment Parameters
+  id: params
+  run: |
+    ENV_FILE="infra/params/devon-${{ inputs.environment }}.json"
+    if [ ! -f "$ENV_FILE" ]; then
+      echo "❌ Parameter file not found: $ENV_FILE"
+      exit 1
+    fi
+    
+    echo "apim_name=apim-$(jq -r '.parameters.workloadName.value + "-" + .parameters.environment.value + "-" + .parameters.location.value + "-" + .parameters.identifier.value' $ENV_FILE)" >> $GITHUB_OUTPUT
+    echo "resource_group=rg-apim-$(jq -r '.parameters.workloadName.value + "-" + .parameters.environment.value + "-" + .parameters.location.value + "-" + .parameters.identifier.value' $ENV_FILE)" >> $GITHUB_OUTPUT
+    echo "subscription_id=$(jq -r '.parameters.subscriptionId.value' $ENV_FILE)" >> $GITHUB_OUTPUT
+
+- name: Validate Subscription Guard
+  run: |
+    EXPECTED_SUB="${{ steps.params.outputs.subscription_id }}"
+    CURRENT_SUB=$(az account show --query id -o tsv)
+    if [ "$EXPECTED_SUB" != "$CURRENT_SUB" ]; then
+      echo "❌ SECURITY VIOLATION: Subscription mismatch!"
+      echo "Expected: $EXPECTED_SUB"
+      echo "Current:  $CURRENT_SUB"
+      exit 1
+    fi
+```
+
+### Security Implications
+
+**Cross-Environment Protection**:
+- **Subscription isolation**: Each environment targets different Azure subscription
+- **Parameter validation**: CI/CD validates correct parameter file usage
+- **Subscription guards**: Automated checks prevent cross-environment deployment
+- **OIDC scoping**: Environment-specific Azure AD app registrations
+
+**Audit and Compliance**:
+- **Version controlled**: All parameter changes tracked in Git history
+- **Code review required**: Parameter modifications require PR approval
+- **Environment-specific approval**: Production parameters require security team review
+- **Immutable deployments**: Parameters locked during deployment process
+
+### Implementation Requirements
+
+**Prerequisites for Devon**:
+1. **Azure Subscriptions**: Separate subscriptions for dev/test/staging/prod
+2. **Naming Convention**: Standardized resource naming across environments
+3. **OIDC Federation**: Environment-specific Azure AD app registrations
+4. **GitHub Environments**: Environment protection rules and approval gates
+
+**Migration from Sandbox**:
+1. Create environment-specific parameter files based on `sandbox.json` template
+2. Update CI/CD workflow to support environment detection and parameter selection
+3. Configure environment-specific secrets and variables in GitHub
+4. Test deployment and rollback procedures for each environment
+
+### Consequences
+
+**Positive Outcomes**:
+- **Environment isolation**: Prevents accidental cross-environment deployments
+- **Configuration clarity**: Explicit parameters for each environment
+- **Audit trail**: All environment changes tracked in version control
+- **Scalability**: Easy to add new environments or modify existing configurations
+- **GitOps alignment**: Supports promotion-based deployment workflows
+
+**Trade-offs**:
+- **Maintenance overhead**: Multiple parameter files to maintain
+- **Initial setup complexity**: Requires environment-specific configuration
+- **File synchronization**: Common parameters need updates across multiple files
+
+**Risk Mitigation**:
+- **Template validation**: JSON schema validation for parameter files
+- **Automated testing**: Parameter file validation in CI/CD pipeline
+- **Documentation**: Clear examples and naming conventions
+- **Code review**: All parameter changes require approval
+
+### Implementation Notes
+
+**File Location**: `infra/params/devon-{environment}.json`  
+**Schema Validation**: Azure Resource Manager parameter schema  
+**Integration Points**: 
+- GitHub Actions workflow (`.github/workflows/apim-ci.yml`)
+- APIOps publisher configuration
+- Azure Bicep deployment templates
+- Environment promotion strategy (`docs/promotion-strategy.md`)
+
+**Related Configurations**:
+- GitHub Environments with protection rules
+- Azure AD federated identity credentials per environment
+- Environment-specific monitoring and alerting configurations
+
+### References
+
+**Technical Documentation**:
+- [Promotion Strategy](./promotion-strategy.md) - Multi-environment deployment approach
+- [GitHub Actions Workflow](../.github/workflows/apim-ci.yml) - CI/CD implementation
+- [Azure Resource Manager Parameters](https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/parameters)
+
+**Microsoft Guidance**:
+- [Azure Well-Architected Framework - Operational Excellence](https://docs.microsoft.com/en-us/azure/architecture/framework/devops/)
+- [GitOps with Azure](https://docs.microsoft.com/en-us/azure/architecture/example-scenario/gitops-aks/gitops-blueprint-aks)
+- [Infrastructure as Code Best Practices](https://docs.microsoft.com/en-us/azure/architecture/framework/devops/iac)
+
+---
 
 ### Related Decisions
 
