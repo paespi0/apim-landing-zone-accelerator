@@ -12,6 +12,27 @@
    - **Visibility:** Keep public initially (will change to private in Step 2)
 4. **Click "Create fork"**
 
+### **Step 1a: Switch to Import Branch (Critical)**
+After forking, the Devon Energy-specific work is in the `import` branch:
+
+```bash
+# Clone your forked repository
+git clone https://github.com/[DEVON-ORG]/apim-landing-zone-accelerator-devon.git
+cd apim-landing-zone-accelerator-devon
+
+# Switch to the import branch (contains all Devon-specific preparation)
+git checkout import
+
+# Optional: Make import your default branch
+git branch -m import main
+git push -u origin main
+git push origin --delete import  # Clean up old import branch
+
+# Update default branch in GitHub Settings → General → Default branch
+```
+
+> **⚠️ IMPORTANT**: All Devon Energy setup documentation and configurations are in the `import` branch, not `main`. The `main` branch contains only the generic Azure reference implementation.
+
 ### **Step 2: Make Repository Private**
 1. **Go to forked repository:** `https://github.com/[DEVON-ORG]/apim-landing-zone-accelerator-devon`
 2. **Navigate to Settings** → **General**
@@ -55,7 +76,7 @@ git push -u origin main
 
 ### **Configure Branch Protection**
 1. **Settings** → **Branches** → **Add rule**
-2. **Branch name pattern:** `main` (or `import` if keeping original)
+2. **Branch name pattern:** `main` (or your default branch)
 3. **Enable these protections:**
    - ✅ **Require a pull request before merging**
    - ✅ **Require approvals:** Set to `1` minimum
@@ -65,6 +86,26 @@ git push -u origin main
    - ✅ **Require branches to be up to date before merging**
    - ✅ **Require conversation resolution before merging**
    - ✅ **Restrict pushes that create files to LFS**
+
+### **Alternative: Repository Rulesets (Recommended)**
+GitHub's newer ruleset feature provides more flexible protection:
+
+1. **Settings** → **Rules** → **Rulesets** → **New ruleset**
+2. **Target branches:** `main` (or pattern `main*`, `release/*`)
+3. **Rules to enable:**
+   - ✅ **Restrict deletions:** Prevent branch deletion
+   - ✅ **Restrict force pushes:** Prevent history rewriting
+   - ✅ **Require pull request:** Require PR workflow
+   - ✅ **Required status checks:** Ensure CI passes
+   - ✅ **Require review:** Minimum 1 approval
+4. **Enforcement status:** Active
+5. **Bypass permissions:** Allow repository administrators to bypass (recommended)
+
+**Benefits of rulesets:**
+- More granular control than branch protection rules
+- Can target multiple branches with patterns
+- Easier to manage across multiple repositories
+- Better integration with GitHub Actions
 
 ### **Set Up Code Owners (Optional)**
 Create `.github/CODEOWNERS` file:
