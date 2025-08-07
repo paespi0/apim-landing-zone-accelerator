@@ -2,6 +2,8 @@
 
 *Comprehensive overview of automated testing capabilities for all APIM artifacts*
 
+> **📝 Note**: The `artifacts/subscriptions/test.json` file is a demo file used to demonstrate security guard functionality. It should be removed by enterprise customers before production use. See [DEVON-SETUP.md](../DEVON-SETUP.md) for details.
+
 ## Artifact Testing Overview
 
 | Artifact Type      | Testability       | Test Strategy                                                                                                                  |

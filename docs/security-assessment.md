@@ -2,6 +2,8 @@
 
 *Final review for Devon Energy APIM Landing Zone Accelerator delivery*
 
+> **🚨 Demo File Notice**: The `artifacts/subscriptions/test.json` file is intentionally included to demonstrate security guard functionality during Microsoft handoff demos. Enterprise customers must remove this file before production use. See [DEVON-SETUP.md](../DEVON-SETUP.md) for cleanup instructions.
+
 ---
 
 ## ✅ Repository Status Assessment

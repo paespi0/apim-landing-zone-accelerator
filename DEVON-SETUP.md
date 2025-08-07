@@ -32,18 +32,47 @@ Update the following files with Devon-specific values:
 - `infra/params/sandbox.json`
 - `scenarios/apim-baseline/bicep/parameters.json`
 
+## **⚠️ IMPORTANT: Demo File Cleanup Required**
+
+### **`artifacts/subscriptions/test.json` - REMOVE THIS FILE**
+
+**Purpose**: This file exists solely to demonstrate the security guard functionality during Microsoft's handoff demo.
+
+**Action Required**: Devon Energy must delete this file before using the repository:
+
+```powershell
+# Remove the demo file and folder
+Remove-Item "artifacts\subscriptions\test.json" -Force
+Remove-Item "artifacts\subscriptions" -Force -Recurse
+
+# Commit the cleanup
+git add -A
+git commit -m "cleanup: remove demo security test file"
+git push
+```
+
+**Why it exists**: 
+- 🎯 **Demo Purpose**: Shows Microsoft CSA that security guards work correctly
+- 🚨 **Intentional Failure**: Makes pipeline fail to demonstrate quality gates
+- 🛡️ **Security Validation**: Proves subscription artifacts are properly blocked
+
+**After removal**: Pipeline security job will pass ✅
+
 ## **Security Features Included**
 
-✅ **Subscription Guard**: The `artifacts/subscriptions/test.json` file demonstrates the security guard functionality  
-✅ **Credential Detection**: Pipeline automatically scans for exposed secrets  
+✅ **Subscription Guard**: Automatically blocks sensitive subscription-level data  
+✅ **Credential Detection**: Pipeline scans for exposed secrets and keys  
 ✅ **OIDC Authentication**: Zero-secret authentication to Azure  
 ✅ **Environment Gates**: Deploy job requires `sbx` environment approval  
+✅ **Automated Scanning**: Spectral linting for API specifications
 
-## **Pipeline Testing**
+## **Pipeline Testing Workflow**
 
-1. **Security Guard Test**: The empty `test.json` file will trigger security violation (expected)
-2. **Remove Test File**: Delete `artifacts/subscriptions/test.json` to pass security checks
-3. **OIDC Test**: Verify authentication works with Devon's federated identity
+1. **Initial State**: Pipeline will fail due to demo `test.json` file (expected)
+2. **Remove Demo File**: Follow cleanup steps above
+3. **Configure Variables**: Set up Devon's Azure credentials in repository variables
+4. **Test OIDC**: Verify authentication works with Devon's federated identity
+5. **Deploy**: Pipeline should now pass all security checks ✅
 
 ---
 *Repository handed off from Microsoft CSA to Devon Energy*
