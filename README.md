@@ -7,6 +7,8 @@ Azure API Management Landing Zone Accelerator provides packaged guidance with re
 **Enterprise customers**: Please see the **[Enterprise Implementation Guide](./docs/README.devon.md)** for comprehensive setup instructions, configuration templates, and production deployment guidelines.
 
 > **⚠️ IMPORTANT**: If you received this repository from Microsoft, see **[DEVON-SETUP.md](./DEVON-SETUP.md)** for required cleanup steps before use.
+> 
+> **🔗 Repository Fork Instructions**: For complete fork setup guidance, see **[Fork Setup Guide](./docs/FORK-SETUP-GUIDE.md)**
 
 This guide includes:
 - Complete setup instructions for your environment

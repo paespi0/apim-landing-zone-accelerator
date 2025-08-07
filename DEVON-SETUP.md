@@ -1,5 +1,7 @@
 # 🚀 **DEVON ENERGY SETUP GUIDE**
 
+> **📋 For complete repository fork instructions, see:** [Fork Setup Guide](./docs/FORK-SETUP-GUIDE.md)
+
 ## **Required GitHub Repository Variables**
 
 After importing this repository, Devon Energy must configure the following repository variables:
