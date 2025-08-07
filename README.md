@@ -1,6 +1,25 @@
 # Azure API Management Landing Zone Accelerator
 
+> **📋 Professional Context**: This repository represents a Microsoft Customer Solution Architecture (CSA) engagement demonstrating enterprise-grade Azure API Management implementation patterns. See [DISCLAIMER.md](./DISCLAIMER.md) for complete context and usage guidance.
+
 Azure API Management Landing Zone Accelerator provides packaged guidance with reference architecture and reference implementation along with design guidance recommendations and considerations on critical design areas for provisioning APIM with a secure baseline. They are aligned with industry proven practices, such as those presented in [Azure landing zones](https://learn.microsoft.com/azure/cloud-adoption-framework/ready/landing-zone/) guidance in the Cloud Adoption Framework.
+
+## 🚀 For Enterprise Implementation
+
+**Enterprise customers**: Please see the **[Enterprise Implementation Guide](./docs/README.devon.md)** for comprehensive setup instructions, configuration templates, and production deployment guidelines.
+
+> **⚠️ IMPORTANT**: If you received this repository from Microsoft, see **[DEVON-SETUP.md](./DEVON-SETUP.md)** for required cleanup steps before use.
+> 
+> **🔗 Repository Setup**: For complete fork setup guidance, see **[Fork Setup Guide](./docs/FORK-SETUP-GUIDE.md)**
+>
+> **🔐 Security Assessment**: See **[Security Assessment](./docs/security-assessment.md)** for comprehensive security audit and compliance validation.
+
+This guide includes:
+- Complete setup instructions for your environment
+- Multi-environment CI/CD pipeline configuration 
+- Security and compliance requirements
+- Production deployment checklist
+- Governance and approval workflows
 
 ## Reference Architecture
 

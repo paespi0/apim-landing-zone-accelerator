@@ -1,0 +1,66 @@
+{
+  "apimIdentityName": {
+    "type": "String",
+    "value": "identity-apim-devon-dev-eastus2-uxs"
+  },
+  "apimName": {
+    "type": "String",
+    "value": "apim-devon-dev-eastus2-uxs"
+  },
+  "apimResourceGroupName": {
+    "type": "String",
+    "value": "rg-apim-devon-dev-eastus2-uxs"
+  },
+  "apimStarterSubscriptionKey": {
+    "type": "String",
+    "value": "PLACEHOLDER-APIM-SUBSCRIPTION-KEY"
+  },
+  "appGatewayName": {
+    "type": "String",
+    "value": "appgw-devon-dev-eastus2-uxs"
+  },
+  "appGatewayPublicIpAddress": {
+    "type": "String",
+    "value": "192.0.2.100"
+  },
+  "deploymentIdentityName": {
+    "type": "String",
+    "value": "mi-deploy-devon-dev-eastus2-uxs"
+  },
+  "deploymentStorageName": {
+    "type": "String",
+    "value": "stdepdevondeveastus2uxs"
+  },
+  "deploymentSubnetId": {
+    "type": "String",
+    "value": "/subscriptions/PLACEHOLDER-SUBSCRIPTION-ID/resourceGroups/rg-networking-devon-dev-eastus2-uxs/providers/Microsoft.Network/virtualNetworks/vnet-apim-cs-devon-dev-eastus2-uxs/subnets/snet-deploy-devon-dev-eastus2-uxs"
+  },
+  "keyVaultName": {
+    "type": "String",
+    "value": "kv-devon-dev-eastus2-uxs"
+  },
+  "networkingResourceGroupName": {
+    "type": "String",
+    "value": "rg-networking-devon-dev-eastus2-uxs"
+  },
+  "privateEndpointSubnetid": {
+    "type": "String",
+    "value": "/subscriptions/PLACEHOLDER-SUBSCRIPTION-ID/resourceGroups/rg-networking-devon-dev-eastus2-uxs/providers/Microsoft.Network/virtualNetworks/vnet-apim-cs-devon-dev-eastus2-uxs/subnets/snet-prep-devon-dev-eastus2-uxs"
+  },
+  "resourceSuffix": {
+    "type": "String",
+    "value": "devon-dev-eastus2-uxs"
+  },
+  "sharedResourceGroupName": {
+    "type": "String",
+    "value": "rg-shared-devon-dev-eastus2-uxs"
+  },
+  "vnetId": {
+    "type": "String",
+    "value": "/subscriptions/PLACEHOLDER-SUBSCRIPTION-ID/resourceGroups/rg-networking-devon-dev-eastus2-uxs/providers/Microsoft.Network/virtualNetworks/vnet-apim-cs-devon-dev-eastus2-uxs"
+  },
+  "vnetName": {
+    "type": "String",
+    "value": "vnet-apim-cs-devon-dev-eastus2-uxs"
+  }
+}
