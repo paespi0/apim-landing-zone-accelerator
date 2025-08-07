@@ -8,7 +8,9 @@ Azure API Management Landing Zone Accelerator provides packaged guidance with re
 
 > **⚠️ IMPORTANT**: If you received this repository from Microsoft, see **[DEVON-SETUP.md](./DEVON-SETUP.md)** for required cleanup steps before use.
 > 
-> **🔗 Repository Fork Instructions**: For complete fork setup guidance, see **[Fork Setup Guide](./docs/FORK-SETUP-GUIDE.md)**
+> **🔗 Repository Setup**: For complete fork setup guidance, see **[Fork Setup Guide](./docs/FORK-SETUP-GUIDE.md)**
+>
+> **🔐 Security Assessment**: See **[Security Assessment](./docs/security-assessment.md)** for comprehensive security audit and compliance validation.
 
 This guide includes:
 - Complete setup instructions for your environment
